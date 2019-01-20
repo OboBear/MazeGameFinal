@@ -105,9 +105,11 @@ public class BeginActivity extends Activity {
         ManClass.man = new Man(2, 2);
         Data.num = 0;
         Data.choose_num = 0;
-        Data.unit_l = (Data.scr_width / 10); // the size of bar ( pixel )
+        // the size of bar ( pixel )
+        Data.unit_l = (Data.scr_width / 10);
         Data.maze_l = Data.maze_a * Data.unit_l;
-        Data.maze_h = Data.maze_b * Data.unit_l;   // the size of maze ( pixel )
+        // the size of maze ( pixel )
+        Data.maze_h = Data.maze_b * Data.unit_l;
 
         Data.bar_x = Data.scr_width * 3 / 4;
         Data.pro_l = Data.scr_width / 9 * 2;

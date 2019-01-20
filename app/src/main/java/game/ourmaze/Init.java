@@ -10,21 +10,12 @@ import game.ourmaze.role.ManClass;
 import game.ourmaze.role.MonsterClass;
 
 public class Init {
-    
+
 	/*--------------------------------paint------------------------------------------*/
 
     public static int paint_man(int _direct, boolean _motion) {
         // draw man
         Data.paint.setColor(Color.YELLOW);
-        RectF rf2 = new RectF(Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.unit_l * (ManClass.man.y - 1) + Data.place_y, Data.unit_l * (ManClass.man.x) + Data.place_x, Data.unit_l * (ManClass.man.y) + Data.place_y);
-//        Data.drawcanvas.drawOval(rf2, Data.paint);
-        if (_motion) {
-            switch (_direct) {
-            }
-        } else {
-            switch (_direct) {
-            }
-        }
         return 1;
     }
 

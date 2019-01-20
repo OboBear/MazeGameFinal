@@ -45,7 +45,6 @@ public class Data {
     public static int scr_height; // screen height
     public static int scr_width; //screen width
 
-    public static Canvas canvas;
     //pictures
     public static Bitmap bitmap;
     public static Bitmap floor;

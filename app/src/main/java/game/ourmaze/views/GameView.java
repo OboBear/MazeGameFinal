@@ -19,7 +19,6 @@ import game.ourmaze.Init;
 import game.ourmaze.role.ManClass;
 import game.ourmaze.R;
 import game.ourmaze.Tool;
-import game.ourmaze.activities.GameActivity;
 
 @SuppressLint("DrawAllocation")
 public class GameView extends View {
@@ -34,35 +33,32 @@ public class GameView extends View {
     // constructor
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        // TODO Auto-generated constructor stub
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
-        // TODO Auto-generated method stub
-        Data.canvas = canvas;
         super.onDraw(canvas);
         Data.drawcanvas = canvas;
-        //	Init.init_view();
         ////////////////////////////////////
         // 图片源
         Paint paint = new Paint();
 
-
-        //   Init.init_data();
         ////////////////////////////////////////////////////////
         int i, j, ii, jj;
 
         j = 0;
-        if (Data.place_x + Data.maze_l > Data.area_x)
+        if (Data.place_x + Data.maze_l > Data.area_x) {
             ii = (Data.area_x - Data.place_x) / Data.unit_l;
-        else ii = 2 * Data.maze_a + 1;
-        if (Data.place_y + Data.maze_h > Data.area_y)
+        } else {
+            ii = 2 * Data.maze_a + 1;
+        }
+        if (Data.place_y + Data.maze_h > Data.area_y) {
             jj = (Data.area_y - Data.place_y) / Data.unit_l;
-        else jj = 2 * Data.maze_b + 1;
+        } else {
+            jj = 2 * Data.maze_b + 1;
+        }
         for (; j <= jj + Data.scr_height / 30; j++) {
-
             i = 0;
             for (; i <= ii + Data.scr_width / 30; i++) {
                 // 迷雾覆盖的格子
@@ -78,10 +74,7 @@ public class GameView extends View {
 
                 // 起点
                 if (Data.fog[i][j] == 1 && Data.maze[i][j] == 3) {
-                    ////
-
                     Data.matrix.postRotate(1, Data.door.getWidth() / 2 + 100, Data.door.getHeight() / 2 + 100);
-
                     canvas.drawBitmap(Bitmap.createBitmap(BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.start)),
                             0, 0, Data.width, Data.height, Data.matrix, true),
                             Data.unit_l * (i - 1) + Data.place_x, Data.unit_l * (j - 1) + Data.place_y, paint);
@@ -95,10 +88,11 @@ public class GameView extends View {
 
                 if (Data.fog[i][j] == 1 && Data.mon[i][j] >= 0) {
 
-                    if (Data.monster_move == 0)
+                    if (Data.monster_move == 0) {
                         canvas.drawBitmap(Data.monst1, Data.unit_l * (i - 1) + Data.place_x, Data.unit_l * (j - 1) + Data.place_y, paint);
-                    else
+                    } else {
                         canvas.drawBitmap(Data.monst2, Data.unit_l * (i - 1) + Data.place_x, Data.unit_l * (j - 1) + Data.place_y, paint);
+                    }
                 }
             }
         }
@@ -108,27 +102,24 @@ public class GameView extends View {
         /////paint man
 
         if (Data.start_move_or_not) {
-
             switch (ManClass.man.direct) {
                 case 1:
-                    canvas.drawBitmap(Data.forw[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x) + Data.place_x - (4 - Data.x_man_move_time_state) * Data.unit_l / 4, Data.place_y + Data.unit_l * (ManClass.man.y) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
-
+                    canvas.drawBitmap(Data.forw[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x) + Data.place_x - (4 - Data.x_man_move_time_state) * Data.unit_l / 4, Data.place_y + Data.unit_l * (ManClass.man.y) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
                     break;
                 case 3:
-                    canvas.drawBitmap(Data.up[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x) + Data.place_x - (4 - Data.x_man_move_time_state) * Data.unit_l / 4, Data.place_y + Data.unit_l * (ManClass.man.y) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
+                    canvas.drawBitmap(Data.up[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x) + Data.place_x - (4 - Data.x_man_move_time_state) * Data.unit_l / 4, Data.place_y + Data.unit_l * (ManClass.man.y) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
 
                     break;
                 case 2:
-                    canvas.drawBitmap(Data.left[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x) + Data.place_x - (4 - Data.x_man_move_time_state) * Data.unit_l / 4, Data.place_y + Data.unit_l * (ManClass.man.y) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
+                    canvas.drawBitmap(Data.left[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x) + Data.place_x - (4 - Data.x_man_move_time_state) * Data.unit_l / 4, Data.place_y + Data.unit_l * (ManClass.man.y) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
 
                     break;
                 case 0:
-                    canvas.drawBitmap(Data.right[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x) + Data.place_x - (4 - Data.x_man_move_time_state) * Data.unit_l / 4, Data.place_y + Data.unit_l * (ManClass.man.y) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
+                    canvas.drawBitmap(Data.right[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x) + Data.place_x - (4 - Data.x_man_move_time_state) * Data.unit_l / 4, Data.place_y + Data.unit_l * (ManClass.man.y) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
 
                     break;
                 default:
-                    canvas.drawBitmap(Data.forw[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x) + Data.place_x - (4 - Data.x_man_move_time_state) * Data.unit_l / 4, Data.place_y + Data.unit_l * (ManClass.man.y) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
-
+                    canvas.drawBitmap(Data.forw[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x) + Data.place_x - (4 - Data.x_man_move_time_state) * Data.unit_l / 4, Data.place_y + Data.unit_l * (ManClass.man.y) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
 
             }
             if (Data.y_man_move_time_state == 4 || Data.y_man_move_time_state == -4 || Data.x_man_move_time_state == 4 || Data.x_man_move_time_state == -4) {
@@ -136,23 +127,23 @@ public class GameView extends View {
 
                 switch (ManClass.man.direct) {
                     case 1:
-                        canvas.drawBitmap(Data.forw[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
+                        canvas.drawBitmap(Data.forw[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
 
                         break;
                     case 3:
-                        canvas.drawBitmap(Data.up[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
+                        canvas.drawBitmap(Data.up[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
 
                         break;
                     case 2:
-                        canvas.drawBitmap(Data.left[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
+                        canvas.drawBitmap(Data.left[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
 
                         break;
                     case 0:
-                        canvas.drawBitmap(Data.right[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
+                        canvas.drawBitmap(Data.right[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
 
                         break;
                     default:
-                        canvas.drawBitmap(Data.forw[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
+                        canvas.drawBitmap(Data.forw[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
 
 
                 }
@@ -168,23 +159,23 @@ public class GameView extends View {
 
             switch (ManClass.man.direct) {
                 case 1:
-                    canvas.drawBitmap(Data.forw[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1), paint);
+                    canvas.drawBitmap(Data.forw[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1), paint);
 
                     break;
                 case 3:
-                    canvas.drawBitmap(Data.up[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1), paint);
+                    canvas.drawBitmap(Data.up[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1), paint);
 
                     break;
                 case 2:
-                    canvas.drawBitmap(Data.left[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1), paint);
+                    canvas.drawBitmap(Data.left[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1), paint);
 
                     break;
                 case 0:
-                    canvas.drawBitmap(Data.right[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1), paint);
+                    canvas.drawBitmap(Data.right[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1), paint);
 
                     break;
                 default:
-                    canvas.drawBitmap(Data.forw[Function.fab(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1), paint);
+                    canvas.drawBitmap(Data.forw[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1), paint);
 
 
             }
@@ -194,8 +185,7 @@ public class GameView extends View {
         /////////////
         //arrive
         if (Data.flag_arrive) {
-            canvas.drawBitmap(BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.arrive)), Data.unit_l * (ManClass.man.x - 1) + Data.place_x - Data.unit_l / 2, Data.unit_l * (ManClass.man.y - 2) + Data.place_y - Data.unit_l / 3, paint);
-
+            canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.arrive), Data.unit_l * (ManClass.man.x - 1) + Data.place_x - Data.unit_l / 2, Data.unit_l * (ManClass.man.y - 2) + Data.place_y - Data.unit_l / 3, paint);
         }
 
 
@@ -206,12 +196,8 @@ public class GameView extends View {
 
         canvas.drawBitmap(Data.toolbox, 0, 0, paint);
         int h1 = Data.scr_height / 15, h2 = h1 + Data.scr_height / 19, h3 = h2 + Data.scr_height / 29, h4 = h3 + Data.scr_height / 29;
-        int h5 = h4 + Data.scr_height / 29;
-        int l1, l2, l3, l4;
+        int l1;
         l1 = Data.pro_l * ManClass.man.blood / Data.Blood;
-        l2 = Data.pro_l * ManClass.man.beat / Data.Beat;
-        l3 = Data.pro_l * ManClass.man.defence / Data.Defence;
-        l4 = Data.pro_l * ManClass.man.wisedom / Data.Wisedom;
 
         Data.paint.setColor(Color.BLACK);
         //Init.bar(_left, _top, _right, _bottom, deep)
@@ -249,17 +235,14 @@ public class GameView extends View {
         if (Data.using_tool) {
             Tool.paint_map();
         }
-        //canvas.drawBitmap(Data.cover,0,0, paint);
 
         if (Data.pass) {
-
             Data.paint.setColor(Color.GRAY);
             Init.bar(Data.scr_width / 4, Data.scr_height / 4, Data.scr_width * 3 / 4, Data.scr_height * 3 / 4);
             Data.paint.setColor(Color.YELLOW);
             paint.setTextSize(Data.unit_l / 2);
             canvas.drawText("恭喜你进入下一关!", Data.scr_width / 4 * 5 / 4, Data.scr_height / 2, paint);
         }
-        //if(true)
         if (Data.death_flag) {
             Data.paint.setColor(Color.GRAY);
             Init.bar(0, 0, Data.scr_width, Data.scr_height);
@@ -273,12 +256,12 @@ public class GameView extends View {
             matrix.postScale(scaleWidth, scaleHeight);
             Bitmap cover = Bitmap.createBitmap(BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.death)), 0, 0, width, height, matrix, true);
 
-
             canvas.drawBitmap(cover, Data.scr_width / 4 * 5 / 3, Data.scr_height / 6, paint);
             paint.setColor(Color.RED);
             paint.setTextSize(Data.unit_l / 3 * 2);
-            if (Data.deep_word <= 250)
+            if (Data.deep_word <= 250) {
                 paint.setAlpha(Data.deep_word += 3);
+            }
             canvas.drawText("你已经在迷宫中迷失了自我!", Data.scr_width / 8, Data.scr_height / 4 * 3, paint);
 
             Data.stop_event = false;
@@ -303,9 +286,7 @@ public class GameView extends View {
             }
             canvas.drawText("你已经征服了迷宫！！！", Data.scr_width / 6, Data.scr_height / 4 * 3, paint);
             Data.stop_event = false;
-
         }
-
     }
 
 
@@ -337,7 +318,7 @@ public class GameView extends View {
                         y_button = y_new;
                         int temp_direct = 0;
                         ///////x move
-                        if (Function.fabs(Data.x_button, Data.x_circlepoint) > Function.fabs(Data.y_button, Data.y_circlepoint)) {
+                        if (Math.abs(Data.x_button - Data.x_circlepoint) > Math.abs(Data.y_button - Data.y_circlepoint)) {
                             if (Data.button_man_move) {
                                 if (Data.x_button - Data.x_circlepoint > 0) {
                                     if (Function.distance(Data.x_button, Data.y_button, Data.x_circlepoint, Data.y_circlepoint) > Data.scr_height / 12) {
@@ -347,7 +328,7 @@ public class GameView extends View {
                                         if (Init.move(Data.direct)) {
                                             Data.button_man_move = false;
                                             Data.start_move_or_not = true;
-                                            buttontime bt = new buttontime(Data.stop_time, -1, 0);
+                                            ButtonTime bt = new ButtonTime(Data.stop_time, -1, 0);
                                             bt.start();
                                         }
                                     } else {
@@ -362,10 +343,9 @@ public class GameView extends View {
                                         if (Init.move(Data.direct)) {
                                             Data.button_man_move = false;
                                             Data.start_move_or_not = true;
-                                            buttontime bt = new buttontime(Data.stop_time, 1, 0);
+                                            ButtonTime bt = new ButtonTime(Data.stop_time, 1, 0);
                                             bt.start();
                                         }
-
                                     } else {
                                         Data.direct = temp_direct;
                                     }
@@ -384,7 +364,7 @@ public class GameView extends View {
                                         if (Init.move(Data.direct)) {
                                             Data.button_man_move = false;
                                             Data.start_move_or_not = true;
-                                            buttontime bt = new buttontime(Data.stop_time, 0, -1);
+                                            ButtonTime bt = new ButtonTime(Data.stop_time, 0, -1);
                                             bt.start();
                                         }
                                     } else {
@@ -398,7 +378,7 @@ public class GameView extends View {
                                         if (Init.move(Data.direct)) {
                                             Data.button_man_move = false;
                                             Data.start_move_or_not = true;
-                                            buttontime bt = new buttontime(Data.stop_time, 0, 1);
+                                            ButtonTime bt = new ButtonTime(Data.stop_time, 0, 1);
                                             bt.start();
                                         }
                                     } else {
@@ -418,8 +398,7 @@ public class GameView extends View {
                             }
                         }
 
-                        Function.screen_move(0);
-                        Init.paint_man(GameActivity.direction, true);
+                        Function.screenMove();
                         postInvalidate();
                         break;
                     case MotionEvent.ACTION_UP:
@@ -447,9 +426,8 @@ public class GameView extends View {
                         y_movescreen = y_new;
                         x_movescreen = x_new;
 
-                        Function.screen_move(0);
+                        Function.screenMove();
 
-                        Init.paint_man(GameActivity.direction, true);
                         postInvalidate();
                         break;
                     case MotionEvent.ACTION_UP:
@@ -476,17 +454,19 @@ public class GameView extends View {
                         Data.y_toolset += y_new - y_movescreen;
                         y_movescreen = y_new;
                         x_movescreen = x_new;
-                        if (Data.y_toolset < -Data.scr_height * 5 / 4)
+                        if (Data.y_toolset < -Data.scr_height * 5 / 4) {
                             Data.y_toolset = -Data.scr_height * 5 / 4;
-                        if (Data.y_toolset > Data.scr_height / 4)
+                        }
+                        if (Data.y_toolset > Data.scr_height / 4) {
                             Data.y_toolset = Data.scr_height / 4;
+                        }
                         for (int i = 0; i < 10; i++) {
                             Data.h_tool[i] = Data.scr_height / 5 * i + Data.y_toolset;
                         }
                         postInvalidate();
                         break;
                     case MotionEvent.ACTION_UP:
-                        if (Data.us_tool_or_not)
+                        if (Data.us_tool_or_not) {
                             for (int i = 0; i < 10; i++) {
                                 if (ManClass.man.man_tool[i] > 0 && x_new > Data.l_tool[i] && x_new < Data.l_tool[i] + Data.unit_l && y_new > Data.h_tool[i] && y_new < Data.h_tool[i] + Data.unit_l)
                                 //ManClass.man.man_tool[i]--;
@@ -495,6 +475,7 @@ public class GameView extends View {
                                 }
 
                             }
+                        }
                         Data.us_tool_or_not = true;
                         postInvalidate();
                         break;
@@ -505,43 +486,41 @@ public class GameView extends View {
     }
 
 
-    class buttontime extends Thread {
+    class ButtonTime extends Thread {
         private int sleep_time;
         private int x, y;
 
-        public buttontime(int st, int xt, int yt) {
+        public ButtonTime(int st, int xt, int yt) {
             sleep_time = st;
             x = xt;
             y = yt;
         }
 
+        @Override
         public void run() {
-
-
             try {
                 sleep(sleep_time / 4);
                 Data.x_man_move_time_state -= x;
                 Data.y_man_move_time_state -= y;
-                Function.screen_move(0);
+                Function.screenMove();
                 postInvalidate();
                 sleep(sleep_time / 4);
                 Data.x_man_move_time_state -= x;
                 Data.y_man_move_time_state -= y;
-                Function.screen_move(0);
+                Function.screenMove();
                 postInvalidate();
                 sleep(sleep_time / 4);
                 Data.x_man_move_time_state -= x;
                 Data.y_man_move_time_state -= y;
-                Function.screen_move(0);
+                Function.screenMove();
                 postInvalidate();
 
                 sleep(sleep_time / 4);
                 ManClass.man.move(Data.direct);
                 Data.x_man_move_time_state -= x;
                 Data.y_man_move_time_state -= y;
-                Function.screen_move(0);
+                Function.screenMove();
                 postInvalidate();
-
 
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
@@ -550,7 +529,6 @@ public class GameView extends View {
             Data.x_man_move_time_state = 0;
             Data.y_man_move_time_state = 0;
             Data.button_man_move = true;
-
         }
     }
 
