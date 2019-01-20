@@ -16,6 +16,7 @@ import game.ourmaze.activities.BeginActivity;
 
 public class BeginView extends View {
 
+    BeginViewCallback beginViewCallback;
     private Bitmap maze;
     private Bitmap man;
     private Paint paint = new Paint();
@@ -79,6 +80,9 @@ public class BeginView extends View {
         initDatas();
     }
 
+    public void setBeginViewCallback(BeginViewCallback beginViewCallback) {
+        this.beginViewCallback = beginViewCallback;
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -103,8 +107,11 @@ public class BeginView extends View {
                     }
 
                     if (x > x2 && x <= x2 + Data.scr_width / 5 && y >= y2 && y <= y2 + Data.scr_height / 8) {
-                        if (choose_2 = true) BeginActivity.choose = 2;
-
+                        if (choose_2 = true) {
+                            if (beginViewCallback != null) {
+                                beginViewCallback.onQuit();
+                            }
+                        }
                     }
                     choose_1 = false;
                     choose_2 = false;
@@ -195,8 +202,12 @@ public class BeginView extends View {
                         sleep(sleep_time);
                         right_man -= 1;
                         left_man += 1;
-                        if (right_man <= man_x) right_man = man_x;
-                        if (left_man >= man_x) left_man = man_x;
+                        if (right_man <= man_x) {
+                            right_man = man_x;
+                        }
+                        if (left_man >= man_x) {
+                            left_man = man_x;
+                        }
                         postInvalidate();
                     }
                     sleep(sleep_time * 50);
@@ -212,7 +223,7 @@ public class BeginView extends View {
                 Data.x_man_move_time_state = 0;
                 Data.y_man_move_time_state = 0;
                 Data.button_man_move = true;
-            } else if (choose_animation == 2)
+            } else if (choose_animation == 2) {
                 try {
                     while (right_man < Data.scr_width || left_man > -400 || down > -400) {
                         sleep(sleep_time);
@@ -224,7 +235,9 @@ public class BeginView extends View {
                         if (down <= -400) down = -400;
                         postInvalidate();
                     }
-                    BeginActivity.choose = 1;
+                    if (beginViewCallback != null) {
+                        beginViewCallback.onStart();
+                    }
                     sleep(500);
                     right_man = man_x;
                     left_man = man_x;
@@ -232,6 +245,7 @@ public class BeginView extends View {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
         }
     }
 }

@@ -1,4 +1,8 @@
-package game.ourmaze;
+package game.ourmaze.role;
+
+import game.ourmaze.Data;
+import game.ourmaze.Function;
+import game.ourmaze.Init;
 
 public class ManClass {
 
@@ -17,7 +21,7 @@ public class ManClass {
 		public int man_tool[]=new int[15];  // the quantity of each tool	
 		public Man(int sx,int sy) { 
 			x=sx; y=sy;
-		    view=3; direct=Data.man_front; win=0; level=0;
+		    view=3; direct= Data.man_front; win=0; level=0;
 		    character=Man1;
 		    wisedom=Data.wisedom_t; blood=Data.MaxBlood[level]; beat=Data.beat_t; defence=Data.defence_t;
 		    Data.Blood=Data.MaxBlood[level]; 

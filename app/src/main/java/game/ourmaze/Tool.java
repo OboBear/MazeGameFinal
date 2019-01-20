@@ -2,6 +2,8 @@ package game.ourmaze;
 
 import android.graphics.Color;
 
+import game.ourmaze.role.ManClass;
+
 public class Tool {
     public static void get_tool(int tool_id) {
         ManClass.man.man_tool[tool_id]++;

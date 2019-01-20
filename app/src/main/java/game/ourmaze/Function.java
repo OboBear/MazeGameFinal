@@ -3,6 +3,8 @@ package game.ourmaze;
 import android.graphics.Color;
 
 import game.ourmaze.activities.GameActivity;
+import game.ourmaze.role.ManClass;
+import game.ourmaze.role.MonsterClass;
 
 public class Function {
 

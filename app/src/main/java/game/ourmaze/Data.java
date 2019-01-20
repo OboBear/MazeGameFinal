@@ -1,6 +1,7 @@
 package game.ourmaze;
 
-import game.ourmaze.ManClass.Man;
+import game.ourmaze.role.ManClass;
+import game.ourmaze.role.ManClass.Man;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

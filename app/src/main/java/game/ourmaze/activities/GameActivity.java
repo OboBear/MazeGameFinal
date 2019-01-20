@@ -4,8 +4,8 @@ import game.ourmaze.Data;
 import game.ourmaze.Function;
 import game.ourmaze.views.GameView;
 import game.ourmaze.Init;
-import game.ourmaze.ManClass;
-import game.ourmaze.ManClass.Man;
+import game.ourmaze.role.ManClass;
+import game.ourmaze.role.ManClass.Man;
 import game.ourmaze.R;
 
 import android.os.Bundle;

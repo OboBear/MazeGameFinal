@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "game.ourmaze"
-        minSdkVersion 5
-        targetSdkVersion 9
+        minSdkVersion 19
+        targetSdkVersion 27
     }
 
     buildTypes {

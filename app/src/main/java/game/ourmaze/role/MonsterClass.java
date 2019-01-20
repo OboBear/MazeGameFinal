@@ -1,7 +1,10 @@
-package game.ourmaze;
+package game.ourmaze.role;
+
+import game.ourmaze.Data;
+import game.ourmaze.Init;
 
 public class MonsterClass {
-    static class Monster {
+    public static class Monster {
         public int x, y;
         public int _toolid;
         public int wisedom, blood, defence, beat; // property

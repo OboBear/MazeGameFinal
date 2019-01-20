@@ -1,11 +1,12 @@
 package game.ourmaze.activities;
 
-import game.ourmaze.views.BeginView;
 import game.ourmaze.Data;
 import game.ourmaze.Init;
-import game.ourmaze.ManClass;
-import game.ourmaze.ManClass.Man;
+import game.ourmaze.role.ManClass;
+import game.ourmaze.role.ManClass.Man;
 import game.ourmaze.R;
+import game.ourmaze.views.BeginView;
+import game.ourmaze.views.BeginViewCallback;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -23,13 +24,27 @@ import android.graphics.Matrix;
 
 public class BeginActivity extends Activity {
 
+    BeginView beginview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         HiddenMenu();
         init();
         setContentView(R.layout.beginview);
-        new choose_button().start();
+        beginview = (BeginView) findViewById(R.id.beginview);
+        beginview.setBeginViewCallback(new BeginViewCallback() {
+            @Override
+            public void onStart() {
+                Intent intent = new Intent();
+                intent.setClass(BeginActivity.this, GameActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onQuit() {
+                finish();
+            }
+        });
     }
 
 
@@ -38,7 +53,6 @@ public class BeginActivity extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
-
 
     public ViewFlipper viewFlipper;
     boolean flag = true;
@@ -269,99 +283,70 @@ public class BeginActivity extends Activity {
 
     private float x_for, y_for;
     private float x_n, y_n;
-    private int buttonflag = 0;
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        float x_new = event.getX();
-        float y_new = event.getY();
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                x_for = x_new;
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-                x_for = x_n;
-                x_n = x_new;
-                break;
-            case MotionEvent.ACTION_UP:
-                if (x_for < x_n) {
-                    if (flag)
-                        if (Data.choose_num > 0) {
-                            flag = false;
-                            Data.choose_num--;
-                            sleep sl = new sleep(700);
-                            viewFlipper.setInAnimation(BeginActivity.this, R.anim.in_leftright);
-                            viewFlipper.setOutAnimation(BeginActivity.this, R.anim.out_leftright);
-                            viewFlipper.showPrevious();
-                            sl.start();
-
-                        } else {
-                            flag = false;
-                            Data.choose_num = 3;
-                            sleep sl = new sleep(700);
-                            viewFlipper.setInAnimation(BeginActivity.this, R.anim.in_leftright);
-                            viewFlipper.setOutAnimation(BeginActivity.this, R.anim.out_leftright);
-                            viewFlipper.showPrevious();
-                            sl.start();
-
-                        }
-                } else {
-
-
-                    if (flag)
-                        if (Data.choose_num < 3) {
-                            flag = false;
-                            Data.choose_num++;
-                            sleep sl = new sleep(700);
-                            viewFlipper.setInAnimation(BeginActivity.this, R.anim.in_rightleft);
-                            viewFlipper.setOutAnimation(BeginActivity.this, R.anim.out_rightleft);
-                            viewFlipper.showNext();
-                            sl.start();
-
-                        } else {
-                            flag = false;
-                            Data.choose_num = 0;
-                            sleep sl = new sleep(700);
-                            viewFlipper.setInAnimation(BeginActivity.this, R.anim.in_rightleft);
-                            viewFlipper.setOutAnimation(BeginActivity.this, R.anim.out_rightleft);
-                            viewFlipper.showNext();
-                            sl.start();
-
-
-                        }
-                }
-
-                break;
-        }
-        return true;
-    }
-
-
-    public static int choose = 0;
-
-    class choose_button extends Thread {
-
-        public choose_button() {}
-
-        public void run() {
-            while (true) {
-                try {
-                    sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (choose == 1) {
-                    choose = 0;
-                    Intent intent = new Intent();
-                    intent.setClass(BeginActivity.this, GameActivity.class);
-                    startActivity(intent);
-                }
-                if (choose == 2) {
-                    choose = 0;
-                    BeginActivity.this.finish();
-                }
-            }
-        }
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        float x_new = event.getX();
+//        float y_new = event.getY();
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                x_for = x_new;
+//                break;
+//
+//            case MotionEvent.ACTION_MOVE:
+//                x_for = x_n;
+//                x_n = x_new;
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                if (x_for < x_n) {
+//                    if (flag)
+//                        if (Data.choose_num > 0) {
+//                            flag = false;
+//                            Data.choose_num--;
+//                            sleep sl = new sleep(700);
+//                            viewFlipper.setInAnimation(BeginActivity.this, R.anim.in_leftright);
+//                            viewFlipper.setOutAnimation(BeginActivity.this, R.anim.out_leftright);
+//                            viewFlipper.showPrevious();
+//                            sl.start();
+//
+//                        } else {
+//                            flag = false;
+//                            Data.choose_num = 3;
+//                            sleep sl = new sleep(700);
+//                            viewFlipper.setInAnimation(BeginActivity.this, R.anim.in_leftright);
+//                            viewFlipper.setOutAnimation(BeginActivity.this, R.anim.out_leftright);
+//                            viewFlipper.showPrevious();
+//                            sl.start();
+//
+//                        }
+//                } else {
+//
+//
+//                    if (flag)
+//                        if (Data.choose_num < 3) {
+//                            flag = false;
+//                            Data.choose_num++;
+//                            sleep sl = new sleep(700);
+//                            viewFlipper.setInAnimation(BeginActivity.this, R.anim.in_rightleft);
+//                            viewFlipper.setOutAnimation(BeginActivity.this, R.anim.out_rightleft);
+//                            viewFlipper.showNext();
+//                            sl.start();
+//
+//                        } else {
+//                            flag = false;
+//                            Data.choose_num = 0;
+//                            sleep sl = new sleep(700);
+//                            viewFlipper.setInAnimation(BeginActivity.this, R.anim.in_rightleft);
+//                            viewFlipper.setOutAnimation(BeginActivity.this, R.anim.out_rightleft);
+//                            viewFlipper.showNext();
+//                            sl.start();
+//
+//
+//                        }
+//                }
+//
+//                break;
+//        }
+//        return true;
+//    }
 }

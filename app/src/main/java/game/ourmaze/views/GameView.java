@@ -16,7 +16,7 @@ import android.view.View;
 import game.ourmaze.Data;
 import game.ourmaze.Function;
 import game.ourmaze.Init;
-import game.ourmaze.ManClass;
+import game.ourmaze.role.ManClass;
 import game.ourmaze.R;
 import game.ourmaze.Tool;
 import game.ourmaze.activities.GameActivity;
@@ -231,7 +231,7 @@ public class GameView extends View {
         paint.setColor(Color.RED);
         canvas.drawText("当前等级：" + (ManClass.man.level + 1), Data.bar_x, Data.scr_height / 30, paint);
 
-        for (i = 0; i < 10; i++)
+        for (i = 0; i < 10; i++) {
             if (ManClass.man.man_tool[i] == 0) {
                 paint.setColor(Color.WHITE);
                 canvas.drawBitmap(Data.tool0[i], Data.l_tool[i], Data.h_tool[i], paint);
@@ -242,6 +242,7 @@ public class GameView extends View {
                 canvas.drawBitmap(Data.tool1[i], Data.l_tool[i], Data.h_tool[i], paint);
                 canvas.drawText(Data.tool_name[i] + "X" + ManClass.man.man_tool[i], Data.l_tool[i], Data.h_tool[i] + Data.scr_width / 11, paint);
             }
+        }
 
         canvas.drawBitmap(Data.circle, Data.x_circlepoint - Data.scr_height / 4, Data.y_circlepoint - Data.scr_height / 4, paint);
         canvas.drawBitmap(Data.button, Data.x_button - Data.r_button / 2, Data.y_button - Data.r_button / 2, paint);
@@ -297,8 +298,9 @@ public class GameView extends View {
             canvas.drawBitmap(cover, Data.scr_width / 4 * 5 / 3, Data.scr_height / 6, paint);
             paint.setColor(Color.RED);
             paint.setTextSize(Data.unit_l / 3 * 2);
-            if (Data.deep_word <= 250)
+            if (Data.deep_word <= 250) {
                 paint.setAlpha(Data.deep_word += 3);
+            }
             canvas.drawText("你已经征服了迷宫！！！", Data.scr_width / 6, Data.scr_height / 4 * 3, paint);
             Data.stop_event = false;
 
@@ -348,7 +350,9 @@ public class GameView extends View {
                                             buttontime bt = new buttontime(Data.stop_time, -1, 0);
                                             bt.start();
                                         }
-                                    } else Data.direct = temp_direct;
+                                    } else {
+                                        Data.direct = temp_direct;
+                                    }
                                 } else {
                                     if (Function.distance(Data.x_button, Data.y_button, Data.x_circlepoint, Data.y_circlepoint) > Data.scr_height / 12) {
 
@@ -362,7 +366,9 @@ public class GameView extends View {
                                             bt.start();
                                         }
 
-                                    } else Data.direct = temp_direct;
+                                    } else {
+                                        Data.direct = temp_direct;
+                                    }
                                 }
                             }
                         }
@@ -381,7 +387,9 @@ public class GameView extends View {
                                             buttontime bt = new buttontime(Data.stop_time, 0, -1);
                                             bt.start();
                                         }
-                                    } else Data.direct = temp_direct;
+                                    } else {
+                                        Data.direct = temp_direct;
+                                    }
                                 } else {
                                     if (Function.distance(Data.x_button, Data.y_button, Data.x_circlepoint, Data.y_circlepoint) > Data.scr_height / 12) {
                                         temp_direct = Data.direct;
@@ -393,7 +401,9 @@ public class GameView extends View {
                                             buttontime bt = new buttontime(Data.stop_time, 0, 1);
                                             bt.start();
                                         }
-                                    } else Data.direct = temp_direct;
+                                    } else {
+                                        Data.direct = temp_direct;
+                                    }
                                 }
                             }
                         }
@@ -410,12 +420,12 @@ public class GameView extends View {
 
                         Function.screen_move(0);
                         Init.paint_man(GameActivity.direction, true);
-                        invalidate();
+                        postInvalidate();
                         break;
                     case MotionEvent.ACTION_UP:
                         Data.x_button = Data.x_circlepoint;
                         Data.y_button = Data.y_circlepoint;
-                        invalidate();
+                        postInvalidate();
                         break;
                 }
             }
@@ -440,10 +450,10 @@ public class GameView extends View {
                         Function.screen_move(0);
 
                         Init.paint_man(GameActivity.direction, true);
-                        invalidate();
+                        postInvalidate();
                         break;
                     case MotionEvent.ACTION_UP:
-                        invalidate();
+                        postInvalidate();
                         break;
                 }
             }
@@ -473,7 +483,7 @@ public class GameView extends View {
                         for (int i = 0; i < 10; i++) {
                             Data.h_tool[i] = Data.scr_height / 5 * i + Data.y_toolset;
                         }
-                        invalidate();
+                        postInvalidate();
                         break;
                     case MotionEvent.ACTION_UP:
                         if (Data.us_tool_or_not)
@@ -486,7 +496,7 @@ public class GameView extends View {
 
                             }
                         Data.us_tool_or_not = true;
-                        invalidate();
+                        postInvalidate();
                         break;
                 }
             }
