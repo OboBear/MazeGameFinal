@@ -2,49 +2,60 @@ package game.ourmaze;
 
 import android.graphics.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import game.ourmaze.bean.ToolBean;
 import game.ourmaze.role.ManClass;
 
+/**
+ * @author obo
+ */
 public class Tool {
+
     public static void get_tool(int tool_id) {
         ManClass.man.man_tool[tool_id]++;
     }
 
-    public static boolean use_tool(int tool_id) {
 
-        switch (Data.tools[tool_id]) {
-            case 'k':
+
+    public static boolean use_tool(int tool_id, ToolBean toolBean) {
+        switch (tool_id) {
+            case 1:
                 if (ManClass.man.x != Data.maze_end[ManClass.man.level][0] || ManClass.man.y != Data.maze_end[ManClass.man.level][1]) {
                     return false;
                 } else {
                     Data.pass = true;
-                    ManClass.man.man_tool[tool_id]--;
+//                    ManClass.man.man_tool[tool_id]--;
+                    toolBean.count --;
                     return false;
                 }
-
-            case 'm':
-                if (Data.using_tool) Data.using_tool = false;
-                else Data.using_tool = true;
-                Data.tool_choose = 'm';
-
-
+            case 2:
+                if (Data.using_tool) {
+                    Data.using_tool = false;
+                } else {
+                    Data.using_tool = true;
+                }
                 break;
-            case 'j':
+            case 3:
                 return mirror();
-            case 'f': {
-                ManClass.man.man_tool[tool_id]--;
+            case 4: {
+//                ManClass.man.man_tool[tool_id]--;
+                toolBean.count --;
                 return dis_fog();
             }
-            case 'r':
+            case 5:
                 if (ManClass.man.blood > 0) {
                     return false;
                 } else {
                     while (ManClass.man.blood < Data.blood_t && ManClass.man.blood < Data.Blood) {
                         ManClass.man.blood += 10;
                     }
-                    ManClass.man.man_tool[tool_id]--;
+//                    ManClass.man.man_tool[tool_id]--;
+                    toolBean.count --;
                 }
                 break;
-            case 'p':
+            case 6:
                 if (ManClass.man.blood == Data.Blood) {
                     return false;
                 } else {
@@ -52,17 +63,19 @@ public class Tool {
                     while (ManClass.man.blood < t && ManClass.man.blood < Data.Blood) {
                         ManClass.man.blood++;
                     }
-                    ManClass.man.man_tool[tool_id]--;
+//                    ManClass.man.man_tool[tool_id]--;
+                    toolBean.count --;
                 }
                 break;
-            case 't':
+            case 7:
                 escape();
-                ManClass.man.man_tool[tool_id]--;
+//                ManClass.man.man_tool[tool_id]--;
+                toolBean.count --;
                 break;
-            case 'a':
+            case 8:
                 paint_road(Data.maze_size[ManClass.man.level][0], Data.maze_size[ManClass.man.level][1]);
                 break;
-            case 'g':
+            case 9:
                 if (ManClass.man.beat == Data.Beat) {
                     return false;
                 } else {
@@ -70,10 +83,11 @@ public class Tool {
                     while (ManClass.man.beat < t && ManClass.man.beat < Data.Beat) {
                         ManClass.man.beat++;
                     }
-                    ManClass.man.man_tool[tool_id]--;
+//                    ManClass.man.man_tool[tool_id]--;
+                    toolBean.count --;
                 }
                 break;
-            case 'd':
+            case 10:
                 if (ManClass.man.defence == Data.Defence) {
                     return false;
                 } else {
@@ -81,7 +95,8 @@ public class Tool {
                     while (ManClass.man.defence < t && ManClass.man.defence < Data.Defence) {
                         ManClass.man.defence++;
                     }
-                    ManClass.man.man_tool[tool_id]--;
+//                    ManClass.man.man_tool[tool_id]--;
+                    toolBean.count --;
                 }
                 break;
             default:
@@ -91,39 +106,43 @@ public class Tool {
     }
 
     public static void paint_map() {
-
         int size = Data.scr_height / 35;
         int place_y = (Data.scr_height - size * Data.maze_b) / 2;
         int place_x = (Data.scr_width - size * Data.maze_a) / 2;
-
-
-        int i, j, ii, jj;
+        int i, j;
         j = 1;
-        ii = 2 * Data.maze_a + 1;
-        jj = 2 * Data.maze_b + 1;
         for (; j <= Data.maze_b; j++) {
             i = 1;
             for (; i <= Data.maze_a; i++) {
 
-                if (Data.maze[i][j] == 0) Data.paint.setColor(Color.GRAY);
+                if (Data.maze[i][j] == 0) {
+                    Data.paint.setColor(Color.GRAY);
+                }
 
-                if (Data.maze[i][j] == 1) Data.paint.setColor(Color.WHITE);
-                if (Data.fog[i][j] == 1 && Data.maze[i][j] == 3) Data.paint.setColor(Color.LTGRAY);
-                if (Data.fog[i][j] == 1 && Data.maze[i][j] == 4) Data.paint.setColor(Color.BLUE);
-                if (Data.maze_start[ManClass.man.level][0] == i && Data.maze_start[ManClass.man.level][1] == j)
+                if (Data.maze[i][j] == 1) {
+                    Data.paint.setColor(Color.WHITE);
+                }
+                if (Data.fog[i][j] == 1 && Data.maze[i][j] == 3) {
+                    Data.paint.setColor(Color.LTGRAY);
+                }
+                if (Data.fog[i][j] == 1 && Data.maze[i][j] == 4) {
+                    Data.paint.setColor(Color.BLUE);
+                }
+                if (Data.maze_start[ManClass.man.level][0] == i && Data.maze_start[ManClass.man.level][1] == j) {
                     Data.paint.setColor(Color.RED);
-                if (Data.maze_end[ManClass.man.level][0] == i && Data.maze_end[ManClass.man.level][1] == j)
+                }
+                if (Data.maze_end[ManClass.man.level][0] == i && Data.maze_end[ManClass.man.level][1] == j) {
                     Data.paint.setColor(Color.BLACK);
+                }
                 Init.bar(place_x + size * (i - 1),
                         place_y + size * (j - 1),
                         place_x + size * i,
                         place_y + size * j);
             }
         }
-
     }
 
-    // 鐓у闀�
+
     public static boolean mirror() {
         /*while(true){
             if(_kbhit()) return false;
@@ -155,9 +174,11 @@ public class Tool {
     }
 
     public static boolean dis_fog() {
-        for (int i = 0; i < Data.maxmaze; i++)
-            for (int j = 0; j < Data.maxmaze; j++)
+        for (int i = 0; i < Data.maxmaze; i++) {
+            for (int j = 0; j < Data.maxmaze; j++) {
                 Data.fog[i][j] = 1;
+            }
+        }
         return true;
     }
 
@@ -226,5 +247,26 @@ public class Tool {
                 }
             }
         }
+    }
+
+
+    static final int []toolIconEmp = {R.drawable.k0, R.drawable.m0, R.drawable.j0, R.drawable.f0,
+            R.drawable.r0, R.drawable.p0, R.drawable.t0, R.drawable.a0,
+            R.drawable.g0, R.drawable.d0};
+    static final int []toolIcon = {R.drawable.k1, R.drawable.m1, R.drawable.j1, R.drawable.f1,
+            R.drawable.r1, R.drawable.p1, R.drawable.t1, R.drawable.a1,
+            R.drawable.g1, R.drawable.d1};
+    static final String[]toolName = {"钥匙", "地图", "照妖", "驱雾", "复活", "生命", "未知", "未知", "攻击", "防御"};
+    public static List<ToolBean> generalTool() {
+        List<ToolBean> toolBeans = new ArrayList<>();
+        for (int i = 0; i<toolIcon.length; i ++) {
+            ToolBean toolBean = new ToolBean();
+            toolBean.iconResource = toolIcon[i];
+            toolBean.iconResourceEmp = toolIconEmp[i];
+            toolBean.name = toolName[i];
+            toolBean.count = 1;
+            toolBeans.add(toolBean);
+        }
+        return toolBeans;
     }
 }

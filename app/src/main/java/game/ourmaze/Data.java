@@ -56,8 +56,8 @@ public class Data {
     public static Bitmap toolbox;
     public static Bitmap button;
     public static Bitmap circle;
-    public static Bitmap tool0[] = new Bitmap[10];
-    public static Bitmap tool1[] = new Bitmap[10];
+//    public static Bitmap tool0[] = new Bitmap[10];
+//    public static Bitmap tool1[] = new Bitmap[10];
     public static Bitmap forw[] = new Bitmap[5];
     public static Bitmap up[] = new Bitmap[5];
     public static Bitmap left[] = new Bitmap[5];
@@ -96,7 +96,6 @@ public class Data {
     public static boolean stop_event = true;  //stop event
     public static boolean using_tool = false;   // tool flag choose or not
     public static boolean pass = false;        //pass
-    public static char tool_choose;        //choosed tool's name
     public static boolean death_flag = false;
 
     /////////////////monster move flag

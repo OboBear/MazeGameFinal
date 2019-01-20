@@ -27,9 +27,11 @@ public class ManClass {
 		    Data.Blood=Data.MaxBlood[level]; 
 			// the initial quantity of each tool is 0
 			for(int i=0;i<15;i++){
-				if(i==7|i==2)
-				man_tool[i]=0;
-				else man_tool[i]=1;
+				if(i==7|i==2) {
+					man_tool[i] = 0;
+				} else {
+					man_tool[i]=1;
+				}
 			}
 		}
 		public void load_character()

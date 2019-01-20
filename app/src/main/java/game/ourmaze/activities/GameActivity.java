@@ -2,6 +2,9 @@ package game.ourmaze.activities;
 
 import game.ourmaze.Data;
 import game.ourmaze.Function;
+import game.ourmaze.Tool;
+import game.ourmaze.adapter.ToolAdapter;
+import game.ourmaze.bean.ToolBean;
 import game.ourmaze.views.GameView;
 import game.ourmaze.Init;
 import game.ourmaze.role.ManClass;
@@ -12,16 +15,22 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameActivity extends Activity {
     /////////////////////////
     public static int direction;
     public static GameView gameView = null;
+    RecyclerView rvToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +44,12 @@ public class GameActivity extends Activity {
         findViews();
         new monster_move(1000).start();
         new Invalidate(5).start();
-
+        rvToolbar = findViewById(R.id.rv_toolbar);
+        rvToolbar.setLayoutManager(new LinearLayoutManager(this));
+        rvToolbar.setAdapter(new ToolAdapter(Tool.generalTool()));
     }
 
     ////
-    //�����»��˵�
     private void HiddenMenu() {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -176,10 +186,9 @@ public class GameActivity extends Activity {
             sleep_time = st;
         }
 
+        @Override
         public void run() {
             while (true) {
-
-
                 try {
                     sleep(sleep_time / 6);
                     Data.monster_move = 0;

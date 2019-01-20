@@ -34,7 +34,7 @@ public class GameView extends View {
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
+    Paint paint = new Paint();
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -42,7 +42,7 @@ public class GameView extends View {
         Data.drawcanvas = canvas;
         ////////////////////////////////////
         // 图片源
-        Paint paint = new Paint();
+
 
         ////////////////////////////////////////////////////////
         int i, j, ii, jj;
@@ -217,18 +217,18 @@ public class GameView extends View {
         paint.setColor(Color.RED);
         canvas.drawText("当前等级：" + (ManClass.man.level + 1), Data.bar_x, Data.scr_height / 30, paint);
 
-        for (i = 0; i < 10; i++) {
-            if (ManClass.man.man_tool[i] == 0) {
-                paint.setColor(Color.WHITE);
-                canvas.drawBitmap(Data.tool0[i], Data.l_tool[i], Data.h_tool[i], paint);
-                canvas.drawText(Data.tool_name[i], Data.l_tool[i], Data.h_tool[i] + Data.scr_width / 11, paint);
-            } else {
-                paint.setColor(Color.YELLOW);
-
-                canvas.drawBitmap(Data.tool1[i], Data.l_tool[i], Data.h_tool[i], paint);
-                canvas.drawText(Data.tool_name[i] + "X" + ManClass.man.man_tool[i], Data.l_tool[i], Data.h_tool[i] + Data.scr_width / 11, paint);
-            }
-        }
+//        for (i = 0; i < 10; i++) {
+//            if (ManClass.man.man_tool[i] == 0) {
+//                paint.setColor(Color.WHITE);
+//                canvas.drawBitmap(Data.tool0[i], Data.l_tool[i], Data.h_tool[i], paint);
+//                canvas.drawText(Data.tool_name[i], Data.l_tool[i], Data.h_tool[i] + Data.scr_width / 11, paint);
+//            } else {
+//                paint.setColor(Color.YELLOW);
+//
+//                canvas.drawBitmap(Data.tool1[i], Data.l_tool[i], Data.h_tool[i], paint);
+//                canvas.drawText(Data.tool_name[i] + "X" + ManClass.man.man_tool[i], Data.l_tool[i], Data.h_tool[i] + Data.scr_width / 11, paint);
+//            }
+//        }
 
         canvas.drawBitmap(Data.circle, Data.x_circlepoint - Data.scr_height / 4, Data.y_circlepoint - Data.scr_height / 4, paint);
         canvas.drawBitmap(Data.button, Data.x_button - Data.r_button / 2, Data.y_button - Data.r_button / 2, paint);
@@ -243,6 +243,7 @@ public class GameView extends View {
             paint.setTextSize(Data.unit_l / 2);
             canvas.drawText("恭喜你进入下一关!", Data.scr_width / 4 * 5 / 4, Data.scr_height / 2, paint);
         }
+
         if (Data.death_flag) {
             Data.paint.setColor(Color.GRAY);
             Init.bar(0, 0, Data.scr_width, Data.scr_height);
@@ -267,7 +268,6 @@ public class GameView extends View {
             Data.stop_event = false;
             /*canvas.drawBitmap(Data.death,Data.scr_width/4, Data.scr_height/4, paint);*/
         }
-        //	if(true)
         if (Data.AK) {
             Data.paint.setColor(Color.GRAY);
             Init.bar(0, 0, Data.scr_width, Data.scr_height);
@@ -311,18 +311,15 @@ public class GameView extends View {
                     case MotionEvent.ACTION_DOWN:
                         x_button = x_new;
                         y_button = y_new;
-
                         break;
                     case MotionEvent.ACTION_MOVE:
                         x_button = x_new;
                         y_button = y_new;
-                        int temp_direct = 0;
                         ///////x move
                         if (Math.abs(Data.x_button - Data.x_circlepoint) > Math.abs(Data.y_button - Data.y_circlepoint)) {
                             if (Data.button_man_move) {
                                 if (Data.x_button - Data.x_circlepoint > 0) {
                                     if (Function.distance(Data.x_button, Data.y_button, Data.x_circlepoint, Data.y_circlepoint) > Data.scr_height / 12) {
-                                        temp_direct = Data.direct;
                                         Data.direct = 0;
                                         ManClass.man.direct = Data.direct = 0;
                                         if (Init.move(Data.direct)) {
@@ -332,12 +329,10 @@ public class GameView extends View {
                                             bt.start();
                                         }
                                     } else {
-                                        Data.direct = temp_direct;
+                                        Data.direct = 0;
                                     }
                                 } else {
                                     if (Function.distance(Data.x_button, Data.y_button, Data.x_circlepoint, Data.y_circlepoint) > Data.scr_height / 12) {
-
-                                        temp_direct = Data.direct;
                                         Data.direct = 2;
                                         ManClass.man.direct = Data.direct = 2;
                                         if (Init.move(Data.direct)) {
@@ -347,7 +342,7 @@ public class GameView extends View {
                                             bt.start();
                                         }
                                     } else {
-                                        Data.direct = temp_direct;
+                                        Data.direct = 0;
                                     }
                                 }
                             }
@@ -358,7 +353,6 @@ public class GameView extends View {
                                 if (Data.y_button - Data.y_circlepoint > 0) {
 
                                     if (Function.distance(Data.x_button, Data.y_button, Data.x_circlepoint, Data.y_circlepoint) > Data.scr_height / 12) {
-                                        temp_direct = Data.direct;
                                         Data.direct = 1;
                                         ManClass.man.direct = Data.direct = 1;
                                         if (Init.move(Data.direct)) {
@@ -368,11 +362,10 @@ public class GameView extends View {
                                             bt.start();
                                         }
                                     } else {
-                                        Data.direct = temp_direct;
+                                        Data.direct = 0;
                                     }
                                 } else {
                                     if (Function.distance(Data.x_button, Data.y_button, Data.x_circlepoint, Data.y_circlepoint) > Data.scr_height / 12) {
-                                        temp_direct = Data.direct;
                                         Data.direct = 3;
                                         ManClass.man.direct = Data.direct = 3;
                                         if (Init.move(Data.direct)) {
@@ -382,7 +375,7 @@ public class GameView extends View {
                                             bt.start();
                                         }
                                     } else {
-                                        Data.direct = temp_direct;
+                                        Data.direct = 0;
                                     }
                                 }
                             }
@@ -411,7 +404,7 @@ public class GameView extends View {
 
             ////////
             //screen move
-            else if (x_new > Data.scr_width / 12) {
+            else /*if (x_new > Data.scr_width / 12)*/ {
                 Data.x_button = Data.x_circlepoint;
                 Data.y_button = Data.y_circlepoint;
                 switch (event.getAction()) {
@@ -437,50 +430,46 @@ public class GameView extends View {
             }
             ///////
             //tool move
-            else {
-                Data.x_button = Data.x_circlepoint;
-                Data.y_button = Data.y_circlepoint;
-                //ManClass.man.man_tool[0]=10;
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        x_movescreen = x_new;
-                        y_movescreen = y_new;
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-
-                        Data.us_tool_or_not = false;
-                        Data.y_toolset += y_new - y_movescreen;
-                        y_movescreen = y_new;
-                        x_movescreen = x_new;
-                        if (Data.y_toolset < -Data.scr_height * 5 / 4) {
-                            Data.y_toolset = -Data.scr_height * 5 / 4;
-                        }
-                        if (Data.y_toolset > Data.scr_height / 4) {
-                            Data.y_toolset = Data.scr_height / 4;
-                        }
-                        for (int i = 0; i < 10; i++) {
-                            Data.h_tool[i] = Data.scr_height / 5 * i + Data.y_toolset;
-                        }
-                        postInvalidate();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        if (Data.us_tool_or_not) {
-                            for (int i = 0; i < 10; i++) {
-                                if (ManClass.man.man_tool[i] > 0 && x_new > Data.l_tool[i] && x_new < Data.l_tool[i] + Data.unit_l && y_new > Data.h_tool[i] && y_new < Data.h_tool[i] + Data.unit_l)
-                                //ManClass.man.man_tool[i]--;
-                                {
-                                    Tool.use_tool(i);
-                                }
-
-                            }
-                        }
-                        Data.us_tool_or_not = true;
-                        postInvalidate();
-                        break;
-                }
-            }
+//            else {
+//                Data.x_button = Data.x_circlepoint;
+//                Data.y_button = Data.y_circlepoint;
+//
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        x_movescreen = x_new;
+//                        y_movescreen = y_new;
+//                        break;
+//
+//                    case MotionEvent.ACTION_MOVE:
+//
+//                        Data.us_tool_or_not = false;
+//                        Data.y_toolset += y_new - y_movescreen;
+//                        y_movescreen = y_new;
+//                        x_movescreen = x_new;
+//                        if (Data.y_toolset < -Data.scr_height * 5 / 4) {
+//                            Data.y_toolset = -Data.scr_height * 5 / 4;
+//                        }
+//                        if (Data.y_toolset > Data.scr_height / 4) {
+//                            Data.y_toolset = Data.scr_height / 4;
+//                        }
+//                        for (int i = 0; i < 10; i++) {
+//                            Data.h_tool[i] = Data.scr_height / 5 * i + Data.y_toolset;
+//                        }
+//                        postInvalidate();
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        if (Data.us_tool_or_not) {
+//                            for (int i = 0; i < 10; i++) {
+//                                if (ManClass.man.man_tool[i] > 0 && x_new > Data.l_tool[i] && x_new < Data.l_tool[i] + Data.unit_l && y_new > Data.h_tool[i] && y_new < Data.h_tool[i] + Data.unit_l) {
+////                                    Tool.use_tool(i);
+//                                }
+//                            }
+//                        }
+//                        Data.us_tool_or_not = true;
+//                        postInvalidate();
+//                        break;
+//                }
+//            }
         }
         return true;
     }
