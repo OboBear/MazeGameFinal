@@ -1,6 +1,7 @@
 package game.ourmaze;
 
 import android.graphics.Color;
+import android.os.Handler;
 
 import game.ourmaze.activities.GameActivity;
 import game.ourmaze.role.ManClass;
@@ -8,10 +9,10 @@ import game.ourmaze.role.MonsterClass;
 
 public class Function {
     public static float distance(float x1, float y1, float x2, float y2) {
-        return (float) Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+        return (float) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
 
-    public static void newpoint(float x1, float y1, float x2, float y2, int dis) {
+    public static void newPoint(float x1, float y1, float x2, float y2, int dis) {
         if (x1 == x2) {
             if (y1 > y2) {
                 Data.x_button = (int) x1;
@@ -29,17 +30,13 @@ public class Function {
                 Data.y_button = (int) y1;
             }
         } else {
-            float l1;
-            float p;
-            l1 = distance(x1, y1, x2, y2);
-            p = dis / l1;
+            float p = dis / distance(x1, y1, x2, y2);
             Data.x_button = (int) (x2 + (x1 - x2) * p);
             Data.y_button = (int) (y2 + (y1 - y2) * p);
         }
     }
-
     // fight
-    public static boolean fight_flag = true;
+    private static boolean fight_flag = true;
 
     public static void fight(int monId) {
         int dMan = MonsterClass.monster[monId].beat - ManClass.man.defence;
@@ -66,7 +63,11 @@ public class Function {
                 MonsterClass.monster[monId].blood = 0;
             }
             fight_flag = false;
-            new sleep(500, 2).start();
+            handler.postDelayed(()-> {
+                Data.stop_event = true;
+                Function.fight_flag = true;
+                GameActivity.gameView.postInvalidate();
+            }, 500);
         }
         if (MonsterClass.monster[monId].blood == 0) {
             Data.mon[MonsterClass.monster[monId].x][MonsterClass.monster[monId].y] = -1;
@@ -104,62 +105,26 @@ public class Function {
         if (Data.place_x > Data.scr_width - (ManClass.man.x + 1) * Data.unit_l) {
             Data.place_x = Data.scr_width - (ManClass.man.x + 1) * Data.unit_l;
         }
-
     }
-
 
     public static void pass() {
         Data.paint.setColor(Color.GRAY);
         Init.bar(Data.scr_width / 4, Data.scr_height / 4, Data.scr_width * 3 / 4, Data.scr_height * 3 / 4);
         Data.stop_event = false;
-        new sleep(2000, 1).start();
-    }
-
-
-}
-
-class sleep extends Thread {
-    private int sleep_time;
-    private int flag;
-
-    public sleep(int st, int flag) {
-        sleep_time = st;
-        this.flag = flag;
-    }
-
-    @Override
-    public void run() {
-        if (flag == 1) {
-            try {
-                sleep(sleep_time);
-                Data.stop_event = true;
-                ManClass.man.level++;
-                Data.Blood = Data.MaxBlood[ManClass.man.level];
-                Init.init_data();
-                Data.num = 0;
-                Data.choose_num = 0;
-                // the size of bar ( pixel )
-                Data.unit_l = Data.scr_width / 10;
-                GameActivity.gameView.postInvalidate();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        handler.postDelayed(() -> {
+            Data.stop_event = true;
+            ManClass.man.level++;
+            Data.Blood = Data.MaxBlood[ManClass.man.level];
+            Init.init_data();
+            Data.num = 0;
+            Data.choose_num = 0;
+            // the size of bar ( pixel )
+            Data.unit_l = Data.scr_width / 10;
             Data.using_tool = false;
             Data.stop_event = true;
             Data.pass = false;
             GameActivity.gameView.postInvalidate();
-        } else {
-            try {
-                sleep(sleep_time);
-                Data.stop_event = true;
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Function.fight_flag = true;
-            GameActivity.gameView.postInvalidate();
-        }
-
+        }, 2000);
     }
+    private static Handler handler = new Handler();
 }
-

@@ -12,7 +12,7 @@ import game.ourmaze.Function;
 import game.ourmaze.Init;
 import game.ourmaze.R;
 import game.ourmaze.Tool;
-import game.ourmaze.adapter.ToolAdapter;
+import game.ourmaze.equipment.adapter.ToolAdapter;
 import game.ourmaze.role.ManClass;
 import game.ourmaze.role.ManClass.Man;
 import game.ourmaze.views.GameView;

@@ -1,4 +1,4 @@
-package game.ourmaze.adapter;
+package game.ourmaze.equipment.adapter;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import game.ourmaze.R;
@@ -21,7 +20,7 @@ import game.ourmaze.equipment.ToolBean;
  */
 public class ToolAdapter extends RecyclerView.Adapter<ToolAdapter.ToolIconViewHolder> {
 
-    List<ToolBean> toolBeans = new ArrayList<>();
+    List<ToolBean> toolBeans;
 
     public ToolAdapter(List<ToolBean> toolBeans) {
         this.toolBeans = toolBeans;
@@ -63,7 +62,7 @@ public class ToolAdapter extends RecyclerView.Adapter<ToolAdapter.ToolIconViewHo
             }
             itemView.setOnClickListener(v->{
                 if (toolBean.count > 0) {
-                    Tool.use_tool(position, toolBean);
+                    Tool.useTool(position, toolBean);
                 }
             });
         }

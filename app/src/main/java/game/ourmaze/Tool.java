@@ -19,43 +19,40 @@ public class Tool {
 
 
 
-    public static boolean use_tool(int tool_id, ToolBean toolBean) {
+    public static boolean useTool(int tool_id, ToolBean toolBean) {
         switch (tool_id) {
-            case 1:
+            case 0:
                 if (ManClass.man.x != Data.maze_end[ManClass.man.level][0] || ManClass.man.y != Data.maze_end[ManClass.man.level][1]) {
                     return false;
                 } else {
                     Data.pass = true;
-//                    ManClass.man.man_tool[tool_id]--;
                     toolBean.count --;
                     return false;
                 }
-            case 2:
+            case 1:
                 if (Data.using_tool) {
                     Data.using_tool = false;
                 } else {
                     Data.using_tool = true;
                 }
                 break;
-            case 3:
+            case 2:
                 return mirror();
-            case 4: {
-//                ManClass.man.man_tool[tool_id]--;
+            case 3: {
                 toolBean.count --;
                 return dis_fog();
             }
-            case 5:
+            case 4:
                 if (ManClass.man.blood > 0) {
                     return false;
                 } else {
                     while (ManClass.man.blood < Data.blood_t && ManClass.man.blood < Data.Blood) {
                         ManClass.man.blood += 10;
                     }
-//                    ManClass.man.man_tool[tool_id]--;
                     toolBean.count --;
                 }
                 break;
-            case 6:
+            case 5:
                 if (ManClass.man.blood == Data.Blood) {
                     return false;
                 } else {
@@ -63,19 +60,17 @@ public class Tool {
                     while (ManClass.man.blood < t && ManClass.man.blood < Data.Blood) {
                         ManClass.man.blood++;
                     }
-//                    ManClass.man.man_tool[tool_id]--;
                     toolBean.count --;
                 }
                 break;
-            case 7:
+            case 6:
                 escape();
-//                ManClass.man.man_tool[tool_id]--;
                 toolBean.count --;
                 break;
-            case 8:
+            case 7:
                 paint_road(Data.maze_size[ManClass.man.level][0], Data.maze_size[ManClass.man.level][1]);
                 break;
-            case 9:
+            case 8:
                 if (ManClass.man.beat == Data.Beat) {
                     return false;
                 } else {
@@ -83,11 +78,10 @@ public class Tool {
                     while (ManClass.man.beat < t && ManClass.man.beat < Data.Beat) {
                         ManClass.man.beat++;
                     }
-//                    ManClass.man.man_tool[tool_id]--;
                     toolBean.count --;
                 }
                 break;
-            case 10:
+            case 9:
                 if (ManClass.man.defence == Data.Defence) {
                     return false;
                 } else {
@@ -95,7 +89,6 @@ public class Tool {
                     while (ManClass.man.defence < t && ManClass.man.defence < Data.Defence) {
                         ManClass.man.defence++;
                     }
-//                    ManClass.man.man_tool[tool_id]--;
                     toolBean.count --;
                 }
                 break;
@@ -161,7 +154,7 @@ public class Tool {
 						for(int i=0;i<10;i++){
 							// 濡傛灉鐐瑰嚮浜嗙i涓亾鍏�							if(Mouse.x>=l_tool[i] && Mouse.x<=l_tool[i]+tools_l && Mouse.y>=h_tool[i] && Mouse.y<=h_tool[i]+tools_l && man.man_tool[i] && Mouse.x>=left_x && Mouse.x<=right_x && Mouse.y<=bottom && Mouse.y>=up_y){
 								// 濡傛灉璇ラ亾鍏峰彲浠ョ敤
-								if(i!=2 && use_tool(i)){
+								if(i!=2 && useTool(i)){
 									sub_tool(i);
 									return false;
 								}

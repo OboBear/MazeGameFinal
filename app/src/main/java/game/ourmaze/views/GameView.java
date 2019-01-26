@@ -1,6 +1,5 @@
 package game.ourmaze.views;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.graphics.Bitmap;
@@ -20,9 +19,7 @@ import game.ourmaze.role.ManClass;
 import game.ourmaze.R;
 import game.ourmaze.Tool;
 
-@SuppressLint("DrawAllocation")
 public class GameView extends View {
-
     /*---------------------------constructor---------------------------------*/
     private static AttributeSet attrs;
 
@@ -42,11 +39,9 @@ public class GameView extends View {
         Data.drawcanvas = canvas;
         ////////////////////////////////////
         // 图片源
-
         ////////////////////////////////////////////////////////
-        int i, j, ii, jj;
+        int ii, jj;
 
-        j = 0;
         if (Data.place_x + Data.maze_l > Data.area_x) {
             ii = (Data.area_x - Data.place_x) / Data.unit_l;
         } else {
@@ -57,9 +52,8 @@ public class GameView extends View {
         } else {
             jj = 2 * Data.maze_b + 1;
         }
-        for (; j <= jj + Data.scr_height / 30; j++) {
-            i = 0;
-            for (; i <= ii + Data.scr_width / 30; i++) {
+        for (int j = 0; j <= jj + Data.scr_height / 30; j++) {
+            for (int i=0; i <= ii + Data.scr_width / 30; i++) {
                 // 迷雾覆盖的格子
                 if (Data.fog[i][j] == 0) {
                     Data.paint.setColor(Color.WHITE);
@@ -84,7 +78,6 @@ public class GameView extends View {
                     canvas.drawBitmap(Data.door, Data.unit_l * (i - 1) + Data.place_x, Data.unit_l * (j - 1) + Data.place_y, paint);
                 }
                 // 小怪
-
                 if (Data.fog[i][j] == 1 && Data.mon[i][j] >= 0) {
 
                     if (Data.monster_move == 0) {
@@ -373,7 +366,7 @@ public class GameView extends View {
                                 Data.x_button = (int) x_new;
                                 Data.y_button = (int) y_new;
                             } else {
-                                Function.newpoint(x_button, y_button, Data.x_circlepoint, Data.y_circlepoint, Data.scr_height / 4);
+                                Function.newPoint(x_button, y_button, Data.x_circlepoint, Data.y_circlepoint, Data.scr_height / 4);
                             }
                         }
 
@@ -390,7 +383,7 @@ public class GameView extends View {
 
             ////////
             //screen move
-            else /*if (x_new > Data.scr_width / 12)*/ {
+            else {
                 Data.x_button = Data.x_circlepoint;
                 Data.y_button = Data.y_circlepoint;
                 switch (event.getAction()) {
@@ -399,14 +392,11 @@ public class GameView extends View {
                         y_movescreen = y_new;
                         break;
                     case MotionEvent.ACTION_MOVE:
-
                         Data.place_x += x_new - x_movescreen;
                         Data.place_y += y_new - y_movescreen;
                         y_movescreen = y_new;
                         x_movescreen = x_new;
-
                         Function.screenMove();
-
                         postInvalidate();
                         break;
                     case MotionEvent.ACTION_UP:
@@ -414,48 +404,6 @@ public class GameView extends View {
                         break;
                 }
             }
-            ///////
-            //tool move
-//            else {
-//                Data.x_button = Data.x_circlepoint;
-//                Data.y_button = Data.y_circlepoint;
-//
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        x_movescreen = x_new;
-//                        y_movescreen = y_new;
-//                        break;
-//
-//                    case MotionEvent.ACTION_MOVE:
-//
-//                        Data.us_tool_or_not = false;
-//                        Data.y_toolset += y_new - y_movescreen;
-//                        y_movescreen = y_new;
-//                        x_movescreen = x_new;
-//                        if (Data.y_toolset < -Data.scr_height * 5 / 4) {
-//                            Data.y_toolset = -Data.scr_height * 5 / 4;
-//                        }
-//                        if (Data.y_toolset > Data.scr_height / 4) {
-//                            Data.y_toolset = Data.scr_height / 4;
-//                        }
-//                        for (int i = 0; i < 10; i++) {
-//                            Data.h_tool[i] = Data.scr_height / 5 * i + Data.y_toolset;
-//                        }
-//                        postInvalidate();
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        if (Data.us_tool_or_not) {
-//                            for (int i = 0; i < 10; i++) {
-//                                if (ManClass.man.man_tool[i] > 0 && x_new > Data.l_tool[i] && x_new < Data.l_tool[i] + Data.unit_l && y_new > Data.h_tool[i] && y_new < Data.h_tool[i] + Data.unit_l) {
-////                                    Tool.use_tool(i);
-//                                }
-//                            }
-//                        }
-//                        Data.us_tool_or_not = true;
-//                        postInvalidate();
-//                        break;
-//                }
-//            }
         }
         return true;
     }
@@ -470,7 +418,6 @@ public class GameView extends View {
             x = xt;
             y = yt;
         }
-
         @Override
         public void run() {
             try {
@@ -506,6 +453,4 @@ public class GameView extends View {
             Data.button_man_move = true;
         }
     }
-
-
 }
