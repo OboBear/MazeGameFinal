@@ -43,7 +43,6 @@ public class GameView extends View {
         ////////////////////////////////////
         // 图片源
 
-
         ////////////////////////////////////////////////////////
         int i, j, ii, jj;
 
@@ -216,19 +215,6 @@ public class GameView extends View {
         //canvas.drawText("财富："+ManClass.man.wisedom,Data.bar_x,h5, paint);
         paint.setColor(Color.RED);
         canvas.drawText("当前等级：" + (ManClass.man.level + 1), Data.bar_x, Data.scr_height / 30, paint);
-
-//        for (i = 0; i < 10; i++) {
-//            if (ManClass.man.man_tool[i] == 0) {
-//                paint.setColor(Color.WHITE);
-//                canvas.drawBitmap(Data.tool0[i], Data.l_tool[i], Data.h_tool[i], paint);
-//                canvas.drawText(Data.tool_name[i], Data.l_tool[i], Data.h_tool[i] + Data.scr_width / 11, paint);
-//            } else {
-//                paint.setColor(Color.YELLOW);
-//
-//                canvas.drawBitmap(Data.tool1[i], Data.l_tool[i], Data.h_tool[i], paint);
-//                canvas.drawText(Data.tool_name[i] + "X" + ManClass.man.man_tool[i], Data.l_tool[i], Data.h_tool[i] + Data.scr_width / 11, paint);
-//            }
-//        }
 
         canvas.drawBitmap(Data.circle, Data.x_circlepoint - Data.scr_height / 4, Data.y_circlepoint - Data.scr_height / 4, paint);
         canvas.drawBitmap(Data.button, Data.x_button - Data.r_button / 2, Data.y_button - Data.r_button / 2, paint);

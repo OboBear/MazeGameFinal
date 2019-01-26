@@ -7,7 +7,28 @@
     <game.ourmaze.views.BeginView
         android:id="@+id/beginview"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/iv_start"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/start1"
+        android:layout_marginBottom="10dp"/>
+
+    <ImageView
+        android:id="@+id/iv_quit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/quit1" />
 
 </RelativeLayout>

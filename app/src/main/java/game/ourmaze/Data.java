@@ -56,8 +56,6 @@ public class Data {
     public static Bitmap toolbox;
     public static Bitmap button;
     public static Bitmap circle;
-//    public static Bitmap tool0[] = new Bitmap[10];
-//    public static Bitmap tool1[] = new Bitmap[10];
     public static Bitmap forw[] = new Bitmap[5];
     public static Bitmap up[] = new Bitmap[5];
     public static Bitmap left[] = new Bitmap[5];

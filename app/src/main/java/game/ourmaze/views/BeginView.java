@@ -15,19 +15,11 @@ import game.ourmaze.R;
 import game.ourmaze.activities.BeginActivity;
 
 public class BeginView extends View {
-
-    BeginViewCallback beginViewCallback;
     private Bitmap maze;
     private Bitmap man;
     private Paint paint = new Paint();
-    private Bitmap button_start1;
-    private Bitmap button_start2;
-    private Bitmap button_quit1;
-    private Bitmap button_quit2;
     private Bitmap cover;
-
     private void initDatas() {
-
         Matrix matrix1 = new Matrix();
         Matrix matrix2 = new Matrix();
         Matrix matrix3 = new Matrix();
@@ -52,21 +44,13 @@ public class BeginView extends View {
         scaleWidth = ((float) Data.scr_width / 5) / width;
         scaleHeight = ((float) Data.scr_height / 8) / height;
         matrix3.postScale(scaleWidth, scaleHeight);
-        button_start1 = Bitmap.createBitmap(BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.start1)), 0, 0, width, height, matrix3, true);
-        button_start2 = Bitmap.createBitmap(BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.start2)), 0, 0, width, height, matrix3, true);
-        button_quit1 = Bitmap.createBitmap(BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.quit1)), 0, 0, width, height, matrix3, true);
-        button_quit2 = Bitmap.createBitmap(BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.quit2)), 0, 0, width, height, matrix3, true);
         width = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.cover)).getWidth();
         height = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.cover)).getHeight();
         scaleWidth = ((float) Data.scr_width) / width;
         scaleHeight = ((float) Data.scr_height) / height;
         matrix4.postScale(scaleWidth, scaleHeight);
         cover = Bitmap.createBitmap(BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.cover)), 0, 0, width, height, matrix4, true);
-        new animation(10, 1).start();
-        x1 = Data.scr_width / 12 / 2;
-        y1 = Data.scr_height * 4 / 5;
-        x2 = Data.scr_width / 8 * 6;
-        y2 = Data.scr_height * 4 / 5;
+        new AnimationThread(10, 1).start();
         man_x = Data.scr_width / 3 * 10 / 9;
     }
 
@@ -75,75 +59,14 @@ public class BeginView extends View {
         initDatas();
     }
 
-    public BeginView(Context context) {
-        super(context);
-        initDatas();
-    }
-
-    public void setBeginViewCallback(BeginViewCallback beginViewCallback) {
-        this.beginViewCallback = beginViewCallback;
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
-        if (key_choose)
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    if (x >= x1 && x <= x1 + Data.scr_width / 5 && y >= y1 && y <= y1 + Data.scr_height / 8) {
-                        choose_1 = true;
-                    }
-                    if (x > x2 && x <= x2 + Data.scr_width / 5 && y >= y2 && y <= y2 + Data.scr_height / 8) {
-                        choose_2 = true;
-                    }
-                    invalidate();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    if (x >= x1 && x <= x1 + Data.scr_width / 5 && y >= y1 && y <= y1 + Data.scr_height / 8) {
-                        if (choose_1 = true) {
-                            new animation(10, 2).start();
-                        }
-                    }
-
-                    if (x > x2 && x <= x2 + Data.scr_width / 5 && y >= y2 && y <= y2 + Data.scr_height / 8) {
-                        if (choose_2 = true) {
-                            if (beginViewCallback != null) {
-                                beginViewCallback.onQuit();
-                            }
-                        }
-                    }
-                    choose_1 = false;
-                    choose_2 = false;
-
-                    invalidate();
-                    break;
-            }
-        return true;
-    }
-
-
     @Override
     protected void onDraw(Canvas canvas) {
-
         canvas.drawBitmap(maze, Data.scr_width / 8, Data.scr_height / 12, paint);
         canvas.drawBitmap(man, right_man, Data.scr_height / 2 * 23 / 24, paint);
         if (isManDown) {
             canvas.drawBitmap(man, man_x, down, paint);
         }
-
         canvas.drawBitmap(man, left_man, Data.scr_height / 2 * 23 / 24, paint);
-
-        if (appear_button1 && choose_1) {
-            canvas.drawBitmap(button_start2, x1, y1, paint);
-        } else if (appear_button1) {
-            canvas.drawBitmap(button_start1, x1, y1, paint);
-        }
-        if (appear_button2 && choose_2) {
-            canvas.drawBitmap(button_quit2, x2, y2, paint);
-        } else if (appear_button2) {
-            canvas.drawBitmap(button_quit1, x2, y2, paint);
-        }
         canvas.drawBitmap(cover, left_to_right, 0, paint);
     }
 
@@ -153,31 +76,24 @@ public class BeginView extends View {
     private int left_man = - 400;
     private int right_man = Data.scr_width;
     private boolean isManDown = false;
-    private boolean appear_button1 = false;
-    private boolean appear_button2 = false;
-    private boolean choose_1 = false;
-    private boolean choose_2 = false;
-    private boolean key_choose = false;
-    private int x1, y1, x2, y2;
     private int man_x;
 
-    class animation extends Thread {
+    class AnimationThread extends Thread {
         private int sleep_time;
         private int choose_animation;
 
-        public animation(int st, int choose_anim) {
+        public AnimationThread(int st, int choose_anim) {
             sleep_time = st;
             this.choose_animation = choose_anim;
         }
 
+        @Override
         public void run() {
             if (choose_animation == 1) {
                 try {
-
                     while (left_to_right <= Data.scr_width) {
                         sleep(sleep_time);
                         left_to_right += 10;
-                        //	down+=10;
                         postInvalidate();
                     }
                     isManDown = true;
@@ -211,12 +127,9 @@ public class BeginView extends View {
                         postInvalidate();
                     }
                     sleep(sleep_time * 50);
-                    appear_button1 = true;
                     postInvalidate();
                     sleep(sleep_time * 50);
-                    appear_button2 = true;
                     postInvalidate();
-                    key_choose = true;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -230,13 +143,16 @@ public class BeginView extends View {
                         right_man += 20;
                         left_man -= 20;
                         down -= 20;
-                        if (right_man >= Data.scr_width) right_man = Data.scr_width;
-                        if (left_man <= -400) left_man = -400;
-                        if (down <= -400) down = -400;
+                        if (right_man >= Data.scr_width) {
+                            right_man = Data.scr_width;
+                        }
+                        if (left_man <= -400) {
+                            left_man = -400;
+                        }
+                        if (down <= -400) {
+                            down = -400;
+                        }
                         postInvalidate();
-                    }
-                    if (beginViewCallback != null) {
-                        beginViewCallback.onStart();
                     }
                     sleep(500);
                     right_man = man_x;

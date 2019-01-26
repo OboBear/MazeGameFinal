@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ViewFlipper;
@@ -22,7 +22,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 
-public class BeginActivity extends Activity {
+public class BeginActivity extends Activity implements View.OnClickListener {
 
     BeginView beginview;
     @Override
@@ -31,20 +31,9 @@ public class BeginActivity extends Activity {
         HiddenMenu();
         init();
         setContentView(R.layout.beginview);
-        beginview = (BeginView) findViewById(R.id.beginview);
-        beginview.setBeginViewCallback(new BeginViewCallback() {
-            @Override
-            public void onStart() {
-                Intent intent = new Intent();
-                intent.setClass(BeginActivity.this, GameActivity.class);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onQuit() {
-                finish();
-            }
-        });
+        beginview = findViewById(R.id.beginview);
+        findViewById(R.id.iv_start).setOnClickListener(this);
+        findViewById(R.id.iv_quit).setOnClickListener(this);
     }
 
 
@@ -56,6 +45,18 @@ public class BeginActivity extends Activity {
 
     public ViewFlipper viewFlipper;
     boolean flag = true;
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.iv_start) {
+            Intent intent = new Intent();
+            intent.setClass(BeginActivity.this, GameActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.iv_quit) {
+            finish();
+        }
+    }
 
     class sleep extends Thread {
         private int sleep_time;
@@ -188,47 +189,6 @@ public class BeginActivity extends Activity {
         Data.scaleHeight = ((float) Data.scr_width / 14) / Data.height;
         matrix = new Matrix();
         matrix.postScale(Data.scaleWidth, Data.scaleHeight);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.k0));
-//        Data.tool0[0] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.m0));
-//        Data.tool0[1] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.j0));
-//        Data.tool0[2] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.f0));
-//        Data.tool0[3] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.r0));
-//        Data.tool0[4] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.p0));
-//        Data.tool0[5] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.t0));
-//        Data.tool0[6] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.a0));
-//        Data.tool0[7] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.g0));
-//        Data.tool0[8] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.d0));
-//        Data.tool0[9] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.k1));
-//        Data.tool1[0] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.m1));
-//        Data.tool1[1] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.j1));
-//        Data.tool1[2] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.f1));
-//        Data.tool1[3] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.r1));
-//        Data.tool1[4] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.p1));
-//        Data.tool1[5] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.t1));
-//        Data.tool1[6] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.a1));
-//        Data.tool1[7] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.g1));
-//        Data.tool1[8] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-//        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.d1));
-//        Data.tool1[9] = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
 
         ////load tool box
         Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.toolbox));
