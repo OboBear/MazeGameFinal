@@ -28,24 +28,13 @@ public class BeginActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HiddenMenu();
         init();
         setContentView(R.layout.beginview);
         beginview = findViewById(R.id.beginview);
         findViewById(R.id.iv_start).setOnClickListener(this);
         findViewById(R.id.iv_quit).setOnClickListener(this);
     }
-
-
-    private void HiddenMenu() {
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
-
-    public ViewFlipper viewFlipper;
     boolean flag = true;
-
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -58,29 +47,10 @@ public class BeginActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    class sleep extends Thread {
-        private int sleep_time;
-
-        public sleep(int st) {
-            sleep_time = st;
-        }
-
-        public void run() {
-
-            try {
-                sleep(sleep_time);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            flag = true;
-        }
-    }
-
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.getRepeatCount() == 0) {
-            event.startTracking();
             finish();
             Data.choose_num = 0;
             return true;
@@ -242,73 +212,4 @@ public class BeginActivity extends Activity implements View.OnClickListener {
         }
     }
 
-
-    private float x_for, y_for;
-    private float x_n, y_n;
-
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        float x_new = event.getX();
-//        float y_new = event.getY();
-//        switch (event.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                x_for = x_new;
-//                break;
-//
-//            case MotionEvent.ACTION_MOVE:
-//                x_for = x_n;
-//                x_n = x_new;
-//                break;
-//            case MotionEvent.ACTION_UP:
-//                if (x_for < x_n) {
-//                    if (flag)
-//                        if (Data.choose_num > 0) {
-//                            flag = false;
-//                            Data.choose_num--;
-//                            sleep sl = new sleep(700);
-//                            viewFlipper.setInAnimation(BeginActivity.this, R.anim.in_leftright);
-//                            viewFlipper.setOutAnimation(BeginActivity.this, R.anim.out_leftright);
-//                            viewFlipper.showPrevious();
-//                            sl.start();
-//
-//                        } else {
-//                            flag = false;
-//                            Data.choose_num = 3;
-//                            sleep sl = new sleep(700);
-//                            viewFlipper.setInAnimation(BeginActivity.this, R.anim.in_leftright);
-//                            viewFlipper.setOutAnimation(BeginActivity.this, R.anim.out_leftright);
-//                            viewFlipper.showPrevious();
-//                            sl.start();
-//
-//                        }
-//                } else {
-//
-//
-//                    if (flag)
-//                        if (Data.choose_num < 3) {
-//                            flag = false;
-//                            Data.choose_num++;
-//                            sleep sl = new sleep(700);
-//                            viewFlipper.setInAnimation(BeginActivity.this, R.anim.in_rightleft);
-//                            viewFlipper.setOutAnimation(BeginActivity.this, R.anim.out_rightleft);
-//                            viewFlipper.showNext();
-//                            sl.start();
-//
-//                        } else {
-//                            flag = false;
-//                            Data.choose_num = 0;
-//                            sleep sl = new sleep(700);
-//                            viewFlipper.setInAnimation(BeginActivity.this, R.anim.in_rightleft);
-//                            viewFlipper.setOutAnimation(BeginActivity.this, R.anim.out_rightleft);
-//                            viewFlipper.showNext();
-//                            sl.start();
-//
-//
-//                        }
-//                }
-//
-//                break;
-//        }
-//        return true;
-//    }
 }

@@ -1,4 +1,4 @@
-package game.ourmaze.bean;
+package game.ourmaze.equipment;
 
 /**
  * @author obo

@@ -6,19 +6,25 @@ import game.ourmaze.Init;
 
 public class ManClass {
 
-
 	/*---------------------- Man-------------------------*/
 	public static class Man {
-		/* charcter */
-		public final static int Man1=1201;
-		public final static int Man2=1202;
-		public final static int Man3=1203;
+		/* charecter */
+		private final static int Man1=1201;
 		/* members */
-		public int x,y;  // coordination
+		/**
+		 *coordination
+ 		 */
+		public int x,y;
 		public int view,direct,win,level;
 		public int character;
-		public int wisedom,blood,defence,beat; // property
-		public int man_tool[]=new int[15];  // the quantity of each tool	
+		/**
+		 * property
+ 		 */
+		public int wisedom,blood,defence,beat;
+		/**
+		 * the quantity of each tool
+ 		 */
+		public int man_tool[]=new int[15];
 		public Man(int sx,int sy) { 
 			x=sx; y=sy;
 		    view=3; direct= Data.man_front; win=0; level=0;
@@ -34,27 +40,13 @@ public class ManClass {
 				}
 			}
 		}
-		public void load_character()
-		{
-			switch(character)
-			{
-			case Man1:
-				break;
-			case Man2:
-				break;
-			case Man3:
-				break;
-			}
-		}
-		public boolean move(int _direct){ 
-			if(Data.maze[ x+Data.drct[_direct][0] ][ y+Data.drct[_direct][1] ]!=0){
-				//clear_monpro();
+
+		public boolean move(int direct){
+			if(Data.maze[ x+Data.drct[direct][0] ][ y+Data.drct[direct][1] ]!=0){
 				Data.num++;
-				x+=Data.drct[_direct][0]; y+=Data.drct[_direct][1]; direct=_direct;// update x,y,direct
+				x+=Data.drct[direct][0]; y+=Data.drct[direct][1]; this.direct =direct;
 				Init.disfog(x,y,view);
-				//Init.repaint(Data.maze_a,Data.maze_b,_direct,true); // repaint the maze
-				if(Data.mon[x][y]!=-1){ // fight with monster
-					//paint_monpro(mon[x][y]);
+				if(Data.mon[x][y]!=-1){
 					Data.stop_event=true;
 					Function.fight(Data.mon[x][y]);
 				}
@@ -63,7 +55,7 @@ public class ManClass {
 			}
 			return false;
 		}
-	};
+	}
 	public static Man man=new Man(2,2);
 
 }

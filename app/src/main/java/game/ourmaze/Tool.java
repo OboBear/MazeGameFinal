@@ -5,7 +5,7 @@ import android.graphics.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import game.ourmaze.bean.ToolBean;
+import game.ourmaze.equipment.ToolBean;
 import game.ourmaze.role.ManClass;
 
 /**

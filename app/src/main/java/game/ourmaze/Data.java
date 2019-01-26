@@ -15,7 +15,6 @@ public class Data {
     public final static int area_y = 350;
     public final static int area_x = 350;
     public final static int maze_size[][] = {{13, 15}, {15, 13}, {15, 15}, {15, 19}, {19, 23}, {23, 21}, {23, 23}, {25, 25}, {27, 25}, {27, 27}}; // the maze_x and maze_y of each level
-    public final static char tools[] = {'k', 'm', 'j', 'f', 'r', 'p', 't', 'a', 'g', 'd'}; // the tool of each idx
     public static int Blood = 200, Beat = 200, Defence = 200, Wisedom = 20000; // the max value of wisedom/blood/defence/beat
     public final static int blood_t = 20, beat_t = 3, defence_t = 2, wisedom_t = 30; // the original wisedom/blood/defence/beat of man
     public final static int mon_pro[][] = {{0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}, {0, 50, 1, 5}};   // the original wisedom/blood/defence/beat of each monster
@@ -77,16 +76,12 @@ public class Data {
     public static int y_man_move_time_state;
     public static boolean button_man_move = true;
     public static boolean start_move_or_not = false;  // BeginView  && GameView
-    public static boolean us_tool_or_not = true;   //
     ////matrix
     public static Matrix matrix = new Matrix();
-    ////text
-    public static String tool_name[] = {"钥匙", "地图", "照妖镜", "驱雾扇", "复活", "生命药", "未知", "未知", "攻击卡", "防御卡"};
 
     ///
     public static final int maze_start[][] = {{2, 2}, {4, 4}, {2, 8}, {2, 8}, {2, 2}, {12, 12}, {14, 14}, {2, 16}, {20, 20}, {2, 8}, {22, 22}};
     public static final int maze_end[][] = {{8, 8}, {12, 12}, {12, 14}, {14, 14}, {2, 8}, {2, 4}, {14, 14}, {2, 18}, {26, 16}, {2, 4}};
-    public static final double a_cost[] = {1, 1, 1, 1, 1.4, 1.4, 1.4, 1.4};  // 鑷姩瀵昏矾绉诲姩娑堣�
     public static final int monst_num[] = {5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
     public static final int MaxBlood[] = {40, 60, 80, 100, 120, 140, 160, 180, 190, 200};
 
