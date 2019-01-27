@@ -60,7 +60,6 @@ public class Hero {
             this.direct = direct;
             Init.disfog(x, y, view);
             if (Data.mon[x][y] != -1) {
-                Data.stop_event = true;
                 fight(Data.mon[x][y]);
             }
             return true;
@@ -69,7 +68,6 @@ public class Hero {
     }
 
     Handler handler = new Handler();
-    private boolean fight_flag = true;
 
     private void fight(int monId) {
         int dMan = Playground.monster[monId].beat - defence;
@@ -85,9 +83,7 @@ public class Hero {
             dMon = 1;
         }
         while (blood > 0 && Playground.monster[monId].blood > 0) {
-            if (fight_flag) {
-                blood -= dMan;
-            }
+            blood -= dMan;
             Playground.monster[monId].blood -= dMon;
             if (blood < 0) {
                 blood = 0;
@@ -95,20 +91,19 @@ public class Hero {
             if (Playground.monster[monId].blood < 0) {
                 Playground.monster[monId].blood = 0;
             }
-            fight_flag = false;
-            handler.postDelayed(() -> {
-                Data.stop_event = true;
-                fight_flag = true;
-                if (uiInterface != null) {
-                    uiInterface.invalidate();
-                }
-            }, 500);
         }
+
         if (Playground.monster[monId].blood == 0) {
             Data.mon[Playground.monster[monId].x][Playground.monster[monId].y] = -1;
             Tool.get_tool(Playground.monster[monId].takedToolId);
             wisedom += 5;
         }
+
+        handler.post(() -> {
+            if (uiInterface != null) {
+                uiInterface.invalidate();
+            }
+        });
     }
 
     public void setUiInterface(UiInterface uiInterface) {

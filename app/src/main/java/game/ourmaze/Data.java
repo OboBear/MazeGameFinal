@@ -33,11 +33,6 @@ public class Data {
     public static Paint paint = new Paint();
     public static Canvas drawcanvas;
 
-    public static int l_tool[] = {550 - 530, 612 - 530, 675 - 530, 737 - 530, 801 - 530, 550 - 530, 612 - 530, 675 - 530, 737 - 530, 801 - 530, 550 - 530, 612 - 530, 675 - 530, 737 - 530, 801 - 530}; // the x of each tool in menu ( pixel )
-    public static int h_tool[] = {330 - 50, 330 - 50, 330 - 50, 330 - 50, 330 - 50, 370 - 50, 370 - 50, 370 - 50, 370 - 50, 370 - 50, 410 - 50, 410 - 50, 410 - 50, 410 - 50, 410 - 50}; // the y of each tool in menu ( pixel )
-    public static int pro_l = 220, pro_h = 15;                      // the whole length and height of property line
-    public static int bar_x = 30;                    // the x of property text and line
-
     /////////////////////////////////////
     public static int num = 0;
     public static int choose_num = 0;
@@ -52,7 +47,6 @@ public class Data {
     public static Bitmap start;
     public static Bitmap monst1;
     public static Bitmap monst2;
-    public static Bitmap toolbox;
     public static Bitmap button;
     public static Bitmap circle;
     public static Bitmap forw[] = new Bitmap[5];

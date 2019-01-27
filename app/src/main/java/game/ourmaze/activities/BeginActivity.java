@@ -73,9 +73,6 @@ public class BeginActivity extends Activity implements View.OnClickListener {
         // the size of maze ( pixel )
         Data.maze_h = Data.maze_b * Data.unit_l;
 
-        Data.bar_x = Data.scr_width * 3 / 4;
-        Data.pro_l = Data.scr_width / 9 * 2;
-        Data.pro_h = Data.scr_height / 40;
         Data.y_toolset = 0;
         Data.x_circlepoint = Data.scr_width - Data.scr_height / 4;
         Data.y_circlepoint = Data.scr_height * 3 / 4;
@@ -151,16 +148,6 @@ public class BeginActivity extends Activity implements View.OnClickListener {
         matrix = new Matrix();
         matrix.postScale(Data.scaleWidth, Data.scaleHeight);
 
-        ////load tool box
-        Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.toolbox));
-        Data.width = Data.bitmap.getWidth();
-        Data.height = Data.bitmap.getHeight();
-        Data.scaleWidth = ((float) Data.scr_width / 12) / Data.width;
-        Data.scaleHeight = ((float) Data.scr_height) / Data.height;
-        matrix = new Matrix();
-        matrix.postScale(Data.scaleWidth, Data.scaleHeight);
-        Data.toolbox = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-
         ////////load buttonbox
         Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.circle));
         Data.width = Data.bitmap.getWidth();
@@ -180,27 +167,6 @@ public class BeginActivity extends Activity implements View.OnClickListener {
         matrix = new Matrix();
         matrix.postScale(Data.scaleWidth, Data.scaleHeight);
         Data.button = Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);
-
-        //load death
-      /*  Data.bitmap = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.death));
-        Data.width = Data.bitmap.getWidth();
-		Data.height = Data.bitmap.getHeight();
-		    // �������ű���
-		Data.scaleWidth = ((float) Data.scr_width/4) / Data.width;
-		Data.scaleHeight = ((float) Data.scr_height/4) / Data.height;
-		matrix = new Matrix();
-	    matrix.postScale(Data.scaleWidth, Data.scaleHeight);
-	    Data.death= Bitmap.createBitmap(Data.bitmap, 0, 0, Data.width, Data.height, matrix, true);*/
-
-
-        /////
-        //tool set
-        for (int i = 0; i < 10; i++) {
-            Data.l_tool[i] = Data.scr_width / 180;
-        }
-        for (int i = 0; i < 10; i++) {
-            Data.h_tool[i] = Data.scr_height / 5 * i;
-        }
     }
 
 }

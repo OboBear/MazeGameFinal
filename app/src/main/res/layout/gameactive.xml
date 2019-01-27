@@ -12,7 +12,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_toolbar"
         android:layout_width="60dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="#66666666"/>
 
     <LinearLayout
         android:layout_width="160dp"

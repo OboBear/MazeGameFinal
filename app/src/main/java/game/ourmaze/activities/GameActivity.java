@@ -265,5 +265,7 @@ public class GameActivity extends Activity implements UiInterface {
         tvBlood.setText("HP：" + Playground.man.blood);
         tvAttack.setText("攻击：" + Playground.man.beat);
         tvDefense.setText("防御：" + Playground.man.defence);
+        pbBlood.setMax(Data.Blood);
+        pbBlood.setProgress(Playground.man.blood);
     }
 }

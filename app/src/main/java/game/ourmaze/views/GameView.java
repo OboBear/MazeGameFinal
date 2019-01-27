@@ -157,26 +157,11 @@ public class GameView extends View {
 
         /////////////
         //arrive
-        if (Data.flag_arrive) {
-            canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.arrive), Data.unit_l * (Playground.man.x - 1) + Data.place_x - Data.unit_l / 2, Data.unit_l * (Playground.man.y - 2) + Data.place_y - Data.unit_l / 3, paint);
-        }
+//        if (Data.flag_arrive) {
+//            canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.arrive), Data.unit_l * (Playground.man.x - 1) + Data.place_x - Data.unit_l / 2, Data.unit_l * (Playground.man.y - 2) + Data.place_y - Data.unit_l / 3, paint);
+//        }
 
         ////////////////////////
-        //paint tool
-        paint.setTextSize(Data.unit_l / 6);
-        canvas.drawBitmap(Data.toolbox, 0, 0, paint);
-        int h1 = Data.scr_height / 15, h2 = h1 + Data.scr_height / 19, h3 = h2 + Data.scr_height / 29, h4 = h3 + Data.scr_height / 29;
-        int l1;
-        l1 = Data.pro_l * Playground.man.blood / Data.Blood;
-
-        Data.paint.setColor(Color.BLACK);
-        drawRect(canvas, Data.bar_x - 10, h1 - 10, Data.bar_x + Data.pro_l + 10, h2 + 10, 50);
-        drawRect(canvas, Data.bar_x - 10, h3 - 10, Data.bar_x + Data.pro_l + 10, h4 + 10, 50);
-        Data.paint.setColor(Color.BLACK);
-        drawRect(canvas, Data.bar_x, h1, Data.bar_x + Data.pro_l, h1 + Data.pro_h, 150);
-        Data.paint.setColor(Color.RED);
-        drawRect(canvas, Data.bar_x, h1, Data.bar_x + l1, h1 + Data.pro_h);
-
         canvas.drawBitmap(Data.circle, Data.x_circlepoint - Data.scr_height / 4, Data.y_circlepoint - Data.scr_height / 4, paint);
         canvas.drawBitmap(Data.button, Data.x_button - Data.r_button / 2, Data.y_button - Data.r_button / 2, paint);
         if (Data.shouldShowMap) {
@@ -236,7 +221,7 @@ public class GameView extends View {
         Data.paint.setAlpha(alpha);
         drawcanvas.drawRect(_left, _top, _right, _bottom, Data.paint);
     }
-    
+
     ////////
     //触屏
     private float x_movescreen = 0;
