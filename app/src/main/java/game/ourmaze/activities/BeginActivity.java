@@ -12,8 +12,8 @@ import android.view.View;
 import game.ourmaze.Data;
 import game.ourmaze.Init;
 import game.ourmaze.R;
-import game.ourmaze.role.ManClass;
-import game.ourmaze.role.ManClass.Man;
+import game.ourmaze.role.Hero;
+import game.ourmaze.role.Playground;
 import game.ourmaze.views.BeginView;
 
 public class BeginActivity extends Activity implements View.OnClickListener {
@@ -61,13 +61,12 @@ public class BeginActivity extends Activity implements View.OnClickListener {
         Data.scr_width = dm.widthPixels;
         Data.place_y = 0;
         Data.place_x = 0;
-        ManClass.man = new Man(2, 2);
         Data.num = 0;
         Data.choose_num = 0;
         Data.start_move_or_not = false;
         Data.direct = 3;
         ////////////
-        ManClass.man = new Man(2, 2);
+        Playground.man = new Hero(2, 2);
         Data.num = 0;
         Data.choose_num = 0;
         // the size of bar ( pixel )

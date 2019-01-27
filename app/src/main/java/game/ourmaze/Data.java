@@ -1,7 +1,7 @@
 package game.ourmaze;
 
-import game.ourmaze.role.ManClass;
-import game.ourmaze.role.ManClass.Man;
+import game.ourmaze.role.Hero;
+import game.ourmaze.role.Playground;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -87,7 +87,7 @@ public class Data {
 
     /////////////////////
     public static boolean stop_event = true;  //stop event
-    public static boolean using_tool = false;   // tool flag choose or not
+    public static boolean shouldShowMap = false;   // tool flag choose or not
     public static boolean death_flag = false;
 
     /////////////////monster move flag
@@ -102,8 +102,8 @@ public class Data {
 
     public static void init() {
         stop_event = true;
-        using_tool = false;
-        ManClass.man = new Man(2, 2);
+        shouldShowMap = false;
+        Playground.man = new Hero(2, 2);
         num = 0;
         choose_num = 0;
         direct = 3;

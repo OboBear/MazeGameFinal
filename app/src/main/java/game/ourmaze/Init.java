@@ -3,8 +3,8 @@ package game.ourmaze;
 
 import java.util.Random;
 
-import game.ourmaze.role.ManClass;
-import game.ourmaze.role.MonsterClass;
+import game.ourmaze.role.Monster;
+import game.ourmaze.role.Playground;
 
 public class Init {
     /*---------------------- plugin-------------------------*/
@@ -44,9 +44,9 @@ public class Init {
         }
         for (int i = 0; i < nmon; ) {
             int x = createRandom(1, Data.maze_a), y = createRandom(1, Data.maze_b);
-            if (Data.mon[x][y] == -1 && Data.maze[x][y] == 1 && (x != ManClass.man.x && y != ManClass.man.y)) {
+            if (Data.mon[x][y] == -1 && Data.maze[x][y] == 1 && (x != Playground.man.x && y != Playground.man.y)) {
                 Data.mon[x][y] = i;
-                MonsterClass.monster[i] = new MonsterClass.Monster(x, y, i);
+                Playground.monster[i] = new Monster(x, y, i);
                 i++;
             }
         }
@@ -90,12 +90,12 @@ public class Init {
 
     /*--------------------------------init---------------------------------------*/
     public static void init_data() {
-        Data.maze_a = Data.maze_size[ManClass.man.level][0];
-        Data.maze_b = Data.maze_size[ManClass.man.level][1];
+        Data.maze_a = Data.maze_size[Playground.man.level][0];
+        Data.maze_b = Data.maze_size[Playground.man.level][1];
         Data.maze_l = Data.maze_a * Data.unit_l;
         Data.maze_h = Data.maze_b * Data.unit_l;
-        ManClass.man.x = Data.maze_start[ManClass.man.level][0];
-        ManClass.man.y = Data.maze_start[ManClass.man.level][1];
+        Playground.man.x = Data.maze_start[Playground.man.level][0];
+        Playground.man.y = Data.maze_start[Playground.man.level][1];
         make_maze(Data.maze, Data.maze_a / 2, Data.maze_b / 2);
         Data.unit_l = Data.area_y / Math.max(Data.maze_a, Data.maze_b);
         for (int i = 0; i <= Data.maze_a + 1; i++) {
@@ -111,15 +111,14 @@ public class Init {
             }
         }
         // 0 is fog
-        putmon(Data.monst_num[ManClass.man.level]);
-        Data.maze[Data.maze_start[ManClass.man.level][0]][Data.maze_start[ManClass.man.level][1]] = 3;
-        Data.maze[Data.maze_end[ManClass.man.level][0]][Data.maze_end[ManClass.man.level][1]] = 4;
-        disfog(Data.maze_start[ManClass.man.level][0], Data.maze_start[ManClass.man.level][1], ManClass.man.view);
+        putmon(Data.monst_num[Playground.man.level]);
+        Data.maze[Data.maze_start[Playground.man.level][0]][Data.maze_start[Playground.man.level][1]] = 3;
+        Data.maze[Data.maze_end[Playground.man.level][0]][Data.maze_end[Playground.man.level][1]] = 4;
+        disfog(Data.maze_start[Playground.man.level][0], Data.maze_start[Playground.man.level][1], Playground.man.view);
     }
 
     public static boolean move(int direct) {
-        return Data.maze[ManClass.man.x + Data.drct[direct][0]][ManClass.man.y + Data.drct[direct][1]] != 0;
+        return Data.maze[Playground.man.x + Data.drct[direct][0]][Playground.man.y + Data.drct[direct][1]] != 0;
     }
-
 }
 

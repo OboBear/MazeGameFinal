@@ -14,14 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import game.ourmaze.Data;
-import game.ourmaze.Function;
 import game.ourmaze.Init;
 import game.ourmaze.R;
 import game.ourmaze.Tool;
-import game.ourmaze.equipment.ToolBean;
 import game.ourmaze.equipment.adapter.ToolAdapter;
-import game.ourmaze.role.ManClass;
-import game.ourmaze.role.ManClass.Man;
+import game.ourmaze.role.Hero;
+import game.ourmaze.role.Playground;
 import game.ourmaze.views.GameView;
 
 public class GameActivity extends Activity {
@@ -71,14 +69,14 @@ public class GameActivity extends Activity {
     ToolAdapter.ToolClickCallBack toolClickCallBack = (position, toolBean) -> {
         switch (position) {
             case 0:
-                if (ManClass.man.x == Data.maze_end[ManClass.man.level][0] && ManClass.man.y == Data.maze_end[ManClass.man.level][1]) {
+                if (Playground.man.x == Data.maze_end[Playground.man.level][0] && Playground.man.y == Data.maze_end[Playground.man.level][1]) {
                     toolBean.count --;
                     updateProperty();
                     pass();
                 }
                 break;
             case 1:
-                Data.using_tool = !Data.using_tool;
+                Data.shouldShowMap = !Data.shouldShowMap;
                 break;
             case 2:
                 break;
@@ -87,18 +85,18 @@ public class GameActivity extends Activity {
                 Tool.dis_fog();
                 break;
             case 4:
-                if (ManClass.man.blood <= 0) {
-                    while (ManClass.man.blood < Data.blood_t && ManClass.man.blood < Data.Blood) {
-                        ManClass.man.blood += 10;
+                if (Playground.man.blood <= 0) {
+                    while (Playground.man.blood < Data.blood_t && Playground.man.blood < Data.Blood) {
+                        Playground.man.blood += 10;
                     }
                     toolBean.count --;
                 }
                 break;
             case 5:
-                if (ManClass.man.blood != Data.Blood) {
-                    int t = ManClass.man.blood + 20;
-                    while (ManClass.man.blood < t && ManClass.man.blood < Data.Blood) {
-                        ManClass.man.blood++;
+                if (Playground.man.blood != Data.Blood) {
+                    int t = Playground.man.blood + 20;
+                    while (Playground.man.blood < t && Playground.man.blood < Data.Blood) {
+                        Playground.man.blood++;
                     }
                     toolBean.count --;
                 }
@@ -108,22 +106,22 @@ public class GameActivity extends Activity {
                 toolBean.count --;
                 break;
             case 7:
-                Tool.paint_road(Data.maze_size[ManClass.man.level][0], Data.maze_size[ManClass.man.level][1]);
+                Tool.paint_road(Data.maze_size[Playground.man.level][0], Data.maze_size[Playground.man.level][1]);
                 break;
             case 8:
-                if (ManClass.man.beat != Data.Beat) {
-                    int t = ManClass.man.beat + 3;
-                    while (ManClass.man.beat < t && ManClass.man.beat < Data.Beat) {
-                        ManClass.man.beat++;
+                if (Playground.man.beat != Data.Beat) {
+                    int t = Playground.man.beat + 3;
+                    while (Playground.man.beat < t && Playground.man.beat < Data.Beat) {
+                        Playground.man.beat++;
                     }
                     toolBean.count --;
                 }
                 break;
             case 9:
-                if (ManClass.man.defence != Data.Defence) {
-                    int t = ManClass.man.defence + 2;
-                    while (ManClass.man.defence < t && ManClass.man.defence < Data.Defence) {
-                        ManClass.man.defence++;
+                if (Playground.man.defence != Data.Defence) {
+                    int t = Playground.man.defence + 2;
+                    while (Playground.man.defence < t && Playground.man.defence < Data.Defence) {
+                        Playground.man.defence++;
                     }
                     toolBean.count --;
                 }
@@ -139,8 +137,8 @@ public class GameActivity extends Activity {
             new AlertDialog.Builder(this).setTitle("").setMessage("退出游戏?").setPositiveButton("确认", (dialog, whichButton) -> {
                 setResult(RESULT_OK);
                 Data.init();
-                ManClass.man.level = 0;
-                ManClass.man = new Man(Data.maze_start[ManClass.man.level][0], Data.maze_start[ManClass.man.level][1]);
+                Playground.man.level = 0;
+                Playground.man = new Hero(Data.maze_start[Playground.man.level][0], Data.maze_start[Playground.man.level][1]);
                 Data.deep_word = 20;
                 GameActivity.this.finish();
             }).setNegativeButton("取消", null).show();
@@ -192,44 +190,43 @@ public class GameActivity extends Activity {
         public void run() {
             while (true) {
                 try {
-                    if (ManClass.man.blood <= 0) {
-                        if (ManClass.man.man_tool[4] == 0) {
+                    if (Playground.man.blood <= 0) {
+                        if (Playground.man.man_tool[4] == 0) {
                             Data.death_flag = true;
                             Data.stop_event = false;
                             sleep(4000);
                             Data.death_flag = false;
                             Data.stop_event = true;
                             Data.init();
-                            ManClass.man.level = 0;
+                            Playground.man.level = 0;
                             Data.stop_event = true;
                             GameActivity.this.finish();
-
                         } else {
-                            while (ManClass.man.blood <= 20) {
+                            while (Playground.man.blood <= 20) {
                                 sleep(10);
                                 gameView.postInvalidate();
-                                ManClass.man.blood += 1;
+                                Playground.man.blood += 1;
                             }
-                            ManClass.man.man_tool[4]--;
-                            if (ManClass.man.man_tool[4] <= 0) {
-                                ManClass.man.man_tool[4] = 0;
+                            Playground.man.man_tool[4]--;
+                            if (Playground.man.man_tool[4] <= 0) {
+                                Playground.man.man_tool[4] = 0;
                             }
                         }
                     }
 
-                    if (ManClass.man.level == 10) {
+                    if (Playground.man.level == 10) {
                         Data.AK = true;
                         Data.stop_event = false;
                         sleep(4000);
                         Data.AK = false;
                         Data.stop_event = true;
                         Data.init();
-                        ManClass.man.level = 0;
+                        Playground.man.level = 0;
                         Data.stop_event = true;
                         finish();
                     }
 
-                    Data.flag_arrive = Data.maze[ManClass.man.x][ManClass.man.y] == 4 && ManClass.man.man_tool[0] > 0;
+                    Data.flag_arrive = Data.maze[Playground.man.x][Playground.man.y] == 4 && Playground.man.man_tool[0] > 0;
                     sleep(sleep_time);
                     gameView.postInvalidate();
 
@@ -245,27 +242,23 @@ public class GameActivity extends Activity {
         Data.stop_event = false;
         Toast.makeText(this, "恭喜你进入下一关", Toast.LENGTH_SHORT).show();
         handler.postDelayed(() -> {
-            ManClass.man.level++;
-            Data.Blood = Data.MaxBlood[ManClass.man.level];
+            Playground.man.level++;
+            Data.Blood = Data.MaxBlood[Playground.man.level];
             Init.init_data();
             Data.num = 0;
             Data.choose_num = 0;
             // the size of bar ( pixel )
             Data.unit_l = Data.scr_width / 10;
-            Data.using_tool = false;
+            Data.shouldShowMap = false;
             updateProperty();
             Data.stop_event = true;
         }, 2000);
     }
 
-
     private void updateProperty() {
-        tvCurrentRank.setText("当前等级：" + (ManClass.man.level + 1));
-        tvBlood.setText("HP：" + ManClass.man.blood);
-        tvAttack.setText("攻击：" + ManClass.man.beat);
-        tvDefense.setText("防御：" + ManClass.man.defence);
+        tvCurrentRank.setText("当前等级：" + (Playground.man.level + 1));
+        tvBlood.setText("HP：" + Playground.man.blood);
+        tvAttack.setText("攻击：" + Playground.man.beat);
+        tvDefense.setText("防御：" + Playground.man.defence);
     }
-
-
-
 }

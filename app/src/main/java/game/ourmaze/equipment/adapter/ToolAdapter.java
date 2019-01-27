@@ -11,7 +11,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import game.ourmaze.R;
-import game.ourmaze.Tool;
 import game.ourmaze.equipment.ToolBean;
 
 /**
@@ -67,11 +66,10 @@ public class ToolAdapter extends RecyclerView.Adapter<ToolAdapter.ToolIconViewHo
                 tv_tool_count.setTextColor(Color.YELLOW);
             } else {
                 iv_tool_icon.setImageResource(toolBean.iconResourceEmp);
-                tv_tool_count.setTextColor(Color.parseColor("#999999"));
+                tv_tool_count.setTextColor(Color.GRAY);
             }
             itemView.setOnClickListener(v->{
                 if (toolBean.count > 0) {
-//                    Tool.useTool(position, toolBean);
                     if (toolClickCallBack != null) {
                         toolClickCallBack.onClick(position, toolBean);
                     }

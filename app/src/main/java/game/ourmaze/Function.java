@@ -1,11 +1,6 @@
 package game.ourmaze;
 
-import android.graphics.Color;
-import android.os.Handler;
-
-import game.ourmaze.activities.GameActivity;
-import game.ourmaze.role.ManClass;
-import game.ourmaze.role.MonsterClass;
+import game.ourmaze.role.Playground;
 
 public class Function {
     public static float distance(float x1, float y1, float x2, float y2) {
@@ -52,17 +47,17 @@ public class Function {
         }
 
         ////man place
-        if (Data.place_y < -(ManClass.man.y - 2) * Data.unit_l) {
-            Data.place_y = -(ManClass.man.y - 2) * Data.unit_l;
+        if (Data.place_y < -(Playground.man.y - 2) * Data.unit_l) {
+            Data.place_y = -(Playground.man.y - 2) * Data.unit_l;
         }
-        if (Data.place_x < -(ManClass.man.x - 2) * Data.unit_l) {
-            Data.place_x = -(ManClass.man.x - 2) * Data.unit_l;
+        if (Data.place_x < -(Playground.man.x - 2) * Data.unit_l) {
+            Data.place_x = -(Playground.man.x - 2) * Data.unit_l;
         }
-        if (Data.place_y > Data.scr_height - (ManClass.man.y + 1) * Data.unit_l) {
-            Data.place_y = Data.scr_height - (ManClass.man.y + 1) * Data.unit_l;
+        if (Data.place_y > Data.scr_height - (Playground.man.y + 1) * Data.unit_l) {
+            Data.place_y = Data.scr_height - (Playground.man.y + 1) * Data.unit_l;
         }
-        if (Data.place_x > Data.scr_width - (ManClass.man.x + 1) * Data.unit_l) {
-            Data.place_x = Data.scr_width - (ManClass.man.x + 1) * Data.unit_l;
+        if (Data.place_x > Data.scr_width - (Playground.man.x + 1) * Data.unit_l) {
+            Data.place_x = Data.scr_width - (Playground.man.x + 1) * Data.unit_l;
         }
     }
 }

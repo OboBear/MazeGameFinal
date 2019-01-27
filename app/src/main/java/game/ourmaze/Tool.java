@@ -4,11 +4,9 @@ import android.graphics.Color;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
-import game.ourmaze.activities.GameActivity;
 import game.ourmaze.equipment.ToolBean;
-import game.ourmaze.role.ManClass;
+import game.ourmaze.role.Playground;
 
 /**
  * @author obo
@@ -16,7 +14,7 @@ import game.ourmaze.role.ManClass;
 public class Tool {
 
     public static void get_tool(int tool_id) {
-        ManClass.man.man_tool[tool_id]++;
+        Playground.man.man_tool[tool_id]++;
     }
 
     public static void paint_map() {
@@ -42,10 +40,10 @@ public class Tool {
                 if (Data.fog[i][j] == 1 && Data.maze[i][j] == 4) {
                     Data.paint.setColor(Color.BLUE);
                 }
-                if (Data.maze_start[ManClass.man.level][0] == i && Data.maze_start[ManClass.man.level][1] == j) {
+                if (Data.maze_start[Playground.man.level][0] == i && Data.maze_start[Playground.man.level][1] == j) {
                     Data.paint.setColor(Color.RED);
                 }
-                if (Data.maze_end[ManClass.man.level][0] == i && Data.maze_end[ManClass.man.level][1] == j) {
+                if (Data.maze_end[Playground.man.level][0] == i && Data.maze_end[Playground.man.level][1] == j) {
                     Data.paint.setColor(Color.BLACK);
                 }
                 Init.bar(place_x + size * (i - 1),
@@ -70,10 +68,10 @@ public class Tool {
         while (true) {
             int x = Init.createRandom(1, Data.maze_a);
             int y = Init.createRandom(1, Data.maze_b);
-            if (Data.mon[x][y] == -1 && Data.maze[x][y] == 1 && ManClass.man.x != x && ManClass.man.y != y) {
-                ManClass.man.x = x;
-                ManClass.man.y = y;
-                Init.disfog(x, y, ManClass.man.view);
+            if (Data.mon[x][y] == -1 && Data.maze[x][y] == 1 && Playground.man.x != x && Playground.man.y != y) {
+                Playground.man.x = x;
+                Playground.man.y = y;
+                Init.disfog(x, y, Playground.man.view);
                 return;
             }
         }
@@ -100,7 +98,7 @@ public class Tool {
 //                    Data.paint.setColor(Color.YELLOW);
 //                    Init.bar(unit_t * (i - 1), unit_t * (j - 1), unit_t * i, unit_t * j);
 //                }
-//                if (ManClass.man.x == i && ManClass.man.y == j) {
+//                if (Playground.man.x == i && Playground.man.y == j) {
 //                    Data.paint.setColor(Color.CYAN);
 //                    Init.bar(unit_t * (i - 1), unit_t * (j - 1), unit_t * i, unit_t * j);
 //                }
@@ -125,7 +123,7 @@ public class Tool {
                     Data.paint.setColor(Color.YELLOW);
                     Init.bar(unit_t * (i - 1), unit_t * (j - 1), unit_t * i, unit_t * j);
                 }
-                if (ManClass.man.x == i && ManClass.man.y == j) {
+                if (Playground.man.x == i && Playground.man.y == j) {
                     Data.paint.setColor(Color.CYAN);
                     Init.bar(unit_t * (i - 1), unit_t * (j - 1), unit_t * i, unit_t * j);
                 }
