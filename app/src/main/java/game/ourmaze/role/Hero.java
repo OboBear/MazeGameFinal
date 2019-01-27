@@ -6,9 +6,9 @@ import game.ourmaze.Data;
 import game.ourmaze.Init;
 import game.ourmaze.Tool;
 import game.ourmaze.activities.GameActivity;
+import game.ourmaze.activities.UiInterface;
 
 public class Hero {
-
     /* charecter */
     private final static int Man1 = 1201;
     /* members */
@@ -26,6 +26,8 @@ public class Hero {
      * the quantity of each tool
      */
     public int man_tool[] = new int[15];
+
+    private UiInterface uiInterface;
 
     public Hero(int sx, int sy) {
         x = sx;
@@ -97,7 +99,9 @@ public class Hero {
             handler.postDelayed(() -> {
                 Data.stop_event = true;
                 fight_flag = true;
-                GameActivity.gameView.postInvalidate();
+                if (uiInterface != null) {
+                    uiInterface.invalidate();
+                }
             }, 500);
         }
         if (Playground.monster[monId].blood == 0) {
@@ -105,5 +109,9 @@ public class Hero {
             Tool.get_tool(Playground.monster[monId].takedToolId);
             wisedom += 5;
         }
+    }
+
+    public void setUiInterface(UiInterface uiInterface) {
+        this.uiInterface = uiInterface;
     }
 }

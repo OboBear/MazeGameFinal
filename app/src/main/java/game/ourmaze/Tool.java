@@ -21,10 +21,8 @@ public class Tool {
         int size = Data.scr_height / 35;
         int place_y = (Data.scr_height - size * Data.maze_b) / 2;
         int place_x = (Data.scr_width - size * Data.maze_a) / 2;
-        int i, j;
-        j = 1;
-        for (; j <= Data.maze_b; j++) {
-            i = 1;
+        for (int j = 1; j <= Data.maze_b; j++) {
+            int i = 1;
             for (; i <= Data.maze_a; i++) {
 
                 if (Data.maze[i][j] == 0) {
@@ -54,15 +52,6 @@ public class Tool {
         }
     }
 
-
-    public static boolean dis_fog() {
-        for (int i = 0; i < Data.maxmaze; i++) {
-            for (int j = 0; j < Data.maxmaze; j++) {
-                Data.fog[i][j] = 1;
-            }
-        }
-        return true;
-    }
 
     public static void escape() {
         while (true) {

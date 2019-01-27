@@ -22,8 +22,8 @@ import game.ourmaze.role.Hero;
 import game.ourmaze.role.Playground;
 import game.ourmaze.views.GameView;
 
-public class GameActivity extends Activity {
-    public static GameView gameView = null;
+public class GameActivity extends Activity implements UiInterface {
+    private GameView gameView = null;
     private RecyclerView rvToolbar;
     private TextView tvCurrentRank;
     private TextView tvBlood;
@@ -49,6 +49,7 @@ public class GameActivity extends Activity {
         Data.maze_b = Data.maze_size[0][1];
         Init.init_data();
         init();
+        Playground.man.setUiInterface(this);
         setContentView(R.layout.gameactive);
         gameView = findViewById(R.id.gameview);
         new monster_move(1000).start();
@@ -82,7 +83,7 @@ public class GameActivity extends Activity {
                 break;
             case 3:
                 toolBean.count --;
-                Tool.dis_fog();
+                gameView.dis_fog();
                 break;
             case 4:
                 if (Playground.man.blood <= 0) {
@@ -138,7 +139,6 @@ public class GameActivity extends Activity {
                 setResult(RESULT_OK);
                 Data.init();
                 Playground.man.level = 0;
-                Playground.man = new Hero(Data.maze_start[Playground.man.level][0], Data.maze_start[Playground.man.level][1]);
                 Data.deep_word = 20;
                 GameActivity.this.finish();
             }).setNegativeButton("取消", null).show();
@@ -152,6 +152,12 @@ public class GameActivity extends Activity {
         Data.unit_l = Data.scr_width / 10;
         Data.maze_l = Data.maze_a * Data.unit_l;
         Data.maze_h = Data.maze_b * Data.unit_l;
+    }
+
+    @Override
+    public void invalidate() {
+        gameView.postInvalidate();
+        updateProperty();
     }
 
     class monster_move extends Thread {
@@ -225,7 +231,6 @@ public class GameActivity extends Activity {
                         Data.stop_event = true;
                         finish();
                     }
-
                     Data.flag_arrive = Data.maze[Playground.man.x][Playground.man.y] == 4 && Playground.man.man_tool[0] > 0;
                     sleep(sleep_time);
                     gameView.postInvalidate();
