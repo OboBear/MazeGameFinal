@@ -236,16 +236,13 @@ public class GameView extends View {
         Data.paint.setAlpha(alpha);
         drawcanvas.drawRect(_left, _top, _right, _bottom, Data.paint);
     }
-
-
-
+    
     ////////
     //触屏
     private float x_movescreen = 0;
     private float y_movescreen = 0;
     public static float x_button = 0;
     public static float y_button = 0;
-
 
     ///////// on click
     @Override
