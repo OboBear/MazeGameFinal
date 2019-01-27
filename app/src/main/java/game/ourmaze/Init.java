@@ -13,11 +13,6 @@ public class Init {
         Data.drawcanvas.drawRect(_left, _top, _right, _bottom, Data.paint);
     }
 
-    public static void bar(int _left, int _top, int _right, int _bottom, int deep) {
-        Data.paint.setAlpha(deep);
-        Data.drawcanvas.drawRect(_left, _top, _right, _bottom, Data.paint);
-    }
-
     private static Random random = new Random(System.currentTimeMillis());
     public static int createRandom(int min, int max) {
         return random.nextInt(max - min + 1) + min;
@@ -108,12 +103,14 @@ public class Init {
                 Data.vst[i][j] = 0;
 
             }
-        }    // 1 is visited
+        }
+        // 1 is visited
         for (int i = 0; i <= Data.maze_a + 1; i++) {
             for (int j = 0; j <= Data.maze_b + 1; j++) {
                 Data.fog[i][j] = 0;
             }
-        }    // 0 is fog
+        }
+        // 0 is fog
         putmon(Data.monst_num[ManClass.man.level]);
         Data.maze[Data.maze_start[ManClass.man.level][0]][Data.maze_start[ManClass.man.level][1]] = 3;
         Data.maze[Data.maze_end[ManClass.man.level][0]][Data.maze_end[ManClass.man.level][1]] = 4;

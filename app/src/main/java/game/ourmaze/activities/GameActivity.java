@@ -2,25 +2,47 @@ package game.ourmaze.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import game.ourmaze.Data;
 import game.ourmaze.Function;
 import game.ourmaze.Init;
 import game.ourmaze.R;
 import game.ourmaze.Tool;
+import game.ourmaze.equipment.ToolBean;
 import game.ourmaze.equipment.adapter.ToolAdapter;
 import game.ourmaze.role.ManClass;
 import game.ourmaze.role.ManClass.Man;
 import game.ourmaze.views.GameView;
 
 public class GameActivity extends Activity {
-
     public static GameView gameView = null;
-    RecyclerView rvToolbar;
+    private RecyclerView rvToolbar;
+    private TextView tvCurrentRank;
+    private TextView tvBlood;
+    private TextView tvAttack;
+    private TextView tvDefense;
+    private ProgressBar pbBlood;
+    private ToolAdapter toolAdapter;
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            int what = msg.what;
+            if (what == 0) {
+                updateProperty();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +57,81 @@ public class GameActivity extends Activity {
         new Invalidate(5).start();
         rvToolbar = findViewById(R.id.rv_toolbar);
         rvToolbar.setLayoutManager(new LinearLayoutManager(this));
-        rvToolbar.setAdapter(new ToolAdapter(Tool.generalTool()));
+        toolAdapter = new ToolAdapter(Tool.generalTool(), toolClickCallBack);
+        rvToolbar.setAdapter(toolAdapter);
+
+        tvCurrentRank = findViewById(R.id.tvCurrentRank);
+        tvBlood = findViewById(R.id.tvBlood);
+        tvAttack = findViewById(R.id.tvAttack);
+        tvDefense = findViewById(R.id.tvDefense);
+        pbBlood = findViewById(R.id.pbBlood);
+        updateProperty();
     }
+
+    ToolAdapter.ToolClickCallBack toolClickCallBack = (position, toolBean) -> {
+        switch (position) {
+            case 0:
+                if (ManClass.man.x == Data.maze_end[ManClass.man.level][0] && ManClass.man.y == Data.maze_end[ManClass.man.level][1]) {
+                    toolBean.count --;
+                    updateProperty();
+                    pass();
+                }
+                break;
+            case 1:
+                Data.using_tool = !Data.using_tool;
+                break;
+            case 2:
+                break;
+            case 3:
+                toolBean.count --;
+                Tool.dis_fog();
+                break;
+            case 4:
+                if (ManClass.man.blood <= 0) {
+                    while (ManClass.man.blood < Data.blood_t && ManClass.man.blood < Data.Blood) {
+                        ManClass.man.blood += 10;
+                    }
+                    toolBean.count --;
+                }
+                break;
+            case 5:
+                if (ManClass.man.blood != Data.Blood) {
+                    int t = ManClass.man.blood + 20;
+                    while (ManClass.man.blood < t && ManClass.man.blood < Data.Blood) {
+                        ManClass.man.blood++;
+                    }
+                    toolBean.count --;
+                }
+                break;
+            case 6:
+                Tool.escape();
+                toolBean.count --;
+                break;
+            case 7:
+                Tool.paint_road(Data.maze_size[ManClass.man.level][0], Data.maze_size[ManClass.man.level][1]);
+                break;
+            case 8:
+                if (ManClass.man.beat != Data.Beat) {
+                    int t = ManClass.man.beat + 3;
+                    while (ManClass.man.beat < t && ManClass.man.beat < Data.Beat) {
+                        ManClass.man.beat++;
+                    }
+                    toolBean.count --;
+                }
+                break;
+            case 9:
+                if (ManClass.man.defence != Data.Defence) {
+                    int t = ManClass.man.defence + 2;
+                    while (ManClass.man.defence < t && ManClass.man.defence < Data.Defence) {
+                        ManClass.man.defence++;
+                    }
+                    toolBean.count --;
+                }
+                break;
+        }
+        toolAdapter.notifyDataSetChanged();
+    };
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -85,34 +180,22 @@ public class GameActivity extends Activity {
                     e.printStackTrace();
                 }
             }
-
         }
     }
 
     class Invalidate extends Thread {
         private int sleep_time;
-
         public Invalidate(int st) {
             sleep_time = st;
         }
-
         @Override
         public void run() {
-            int a = 0;
             while (true) {
                 try {
-                    if (a == 0 && Data.pass) {
-                        a++;
-                        Function.pass();
-                    }
-                    if (Data.pass == false) {
-                        a = 0;
-                    }
-                    if (ManClass.man.blood == 0) {
+                    if (ManClass.man.blood <= 0) {
                         if (ManClass.man.man_tool[4] == 0) {
                             Data.death_flag = true;
                             Data.stop_event = false;
-
                             sleep(4000);
                             Data.death_flag = false;
                             Data.stop_event = true;
@@ -126,7 +209,6 @@ public class GameActivity extends Activity {
                                 sleep(10);
                                 gameView.postInvalidate();
                                 ManClass.man.blood += 1;
-
                             }
                             ManClass.man.man_tool[4]--;
                             if (ManClass.man.man_tool[4] <= 0) {
@@ -147,11 +229,7 @@ public class GameActivity extends Activity {
                         finish();
                     }
 
-                    if (Data.maze[ManClass.man.x][ManClass.man.y] == 4 && ManClass.man.man_tool[0] > 0) {
-                        Data.flag_arrive = true;
-                    } else {
-                        Data.flag_arrive = false;
-                    }
+                    Data.flag_arrive = Data.maze[ManClass.man.x][ManClass.man.y] == 4 && ManClass.man.man_tool[0] > 0;
                     sleep(sleep_time);
                     gameView.postInvalidate();
 
@@ -161,5 +239,33 @@ public class GameActivity extends Activity {
             }
         }
     }
+
+    public void pass() {
+        Data.paint.setColor(Color.GRAY);
+        Data.stop_event = false;
+        Toast.makeText(this, "恭喜你进入下一关", Toast.LENGTH_SHORT).show();
+        handler.postDelayed(() -> {
+            ManClass.man.level++;
+            Data.Blood = Data.MaxBlood[ManClass.man.level];
+            Init.init_data();
+            Data.num = 0;
+            Data.choose_num = 0;
+            // the size of bar ( pixel )
+            Data.unit_l = Data.scr_width / 10;
+            Data.using_tool = false;
+            updateProperty();
+            Data.stop_event = true;
+        }, 2000);
+    }
+
+
+    private void updateProperty() {
+        tvCurrentRank.setText("当前等级：" + (ManClass.man.level + 1));
+        tvBlood.setText("HP：" + ManClass.man.blood);
+        tvAttack.setText("攻击：" + ManClass.man.beat);
+        tvDefense.setText("防御：" + ManClass.man.defence);
+    }
+
+
 
 }

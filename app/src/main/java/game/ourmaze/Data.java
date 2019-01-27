@@ -88,7 +88,6 @@ public class Data {
     /////////////////////
     public static boolean stop_event = true;  //stop event
     public static boolean using_tool = false;   // tool flag choose or not
-    public static boolean pass = false;        //pass
     public static boolean death_flag = false;
 
     /////////////////monster move flag

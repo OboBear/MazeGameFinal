@@ -35,47 +35,6 @@ public class Function {
             Data.y_button = (int) (y2 + (y1 - y2) * p);
         }
     }
-    // fight
-    private static boolean fight_flag = true;
-
-    public static void fight(int monId) {
-        int dMan = MonsterClass.monster[monId].beat - ManClass.man.defence;
-        int dMon = ManClass.man.beat - MonsterClass.monster[monId].defence;
-        if (dMan < 0 && MonsterClass.monster[monId].beat < ManClass.man.defence / 2) {
-            dMan = 0;
-        } else if (dMan < 0) {
-            dMan = 1;
-        }
-        if (dMon < 0 && ManClass.man.beat < MonsterClass.monster[monId].defence / 2) {
-            dMon = 0;
-        } else if (dMon < 0) {
-            dMon = 1;
-        }
-        while (ManClass.man.blood != 0 && MonsterClass.monster[monId].blood != 0) {
-            if (fight_flag) {
-                ManClass.man.blood -= dMan;
-            }
-            MonsterClass.monster[monId].blood -= dMon;
-            if (ManClass.man.blood < 0) {
-                ManClass.man.blood = 0;
-            }
-            if (MonsterClass.monster[monId].blood < 0) {
-                MonsterClass.monster[monId].blood = 0;
-            }
-            fight_flag = false;
-            handler.postDelayed(()-> {
-                Data.stop_event = true;
-                Function.fight_flag = true;
-                GameActivity.gameView.postInvalidate();
-            }, 500);
-        }
-        if (MonsterClass.monster[monId].blood == 0) {
-            Data.mon[MonsterClass.monster[monId].x][MonsterClass.monster[monId].y] = -1;
-            Tool.get_tool(MonsterClass.monster[monId]._toolid);
-            ManClass.man.wisedom += 5;
-        }
-    }
-
 
     //////screen move
     public static void screenMove() {
@@ -106,25 +65,4 @@ public class Function {
             Data.place_x = Data.scr_width - (ManClass.man.x + 1) * Data.unit_l;
         }
     }
-
-    public static void pass() {
-        Data.paint.setColor(Color.GRAY);
-        Init.bar(Data.scr_width / 4, Data.scr_height / 4, Data.scr_width * 3 / 4, Data.scr_height * 3 / 4);
-        Data.stop_event = false;
-        handler.postDelayed(() -> {
-            Data.stop_event = true;
-            ManClass.man.level++;
-            Data.Blood = Data.MaxBlood[ManClass.man.level];
-            Init.init_data();
-            Data.num = 0;
-            Data.choose_num = 0;
-            // the size of bar ( pixel )
-            Data.unit_l = Data.scr_width / 10;
-            Data.using_tool = false;
-            Data.stop_event = true;
-            Data.pass = false;
-            GameActivity.gameView.postInvalidate();
-        }, 2000);
-    }
-    private static Handler handler = new Handler();
 }

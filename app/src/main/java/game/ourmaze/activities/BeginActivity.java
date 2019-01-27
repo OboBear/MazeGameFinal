@@ -1,26 +1,20 @@
 package game.ourmaze.activities;
 
-import game.ourmaze.Data;
-import game.ourmaze.Init;
-import game.ourmaze.role.ManClass;
-import game.ourmaze.role.ManClass.Man;
-import game.ourmaze.R;
-import game.ourmaze.views.BeginView;
-import game.ourmaze.views.BeginViewCallback;
-
-import android.os.Bundle;
 import android.app.Activity;
-import android.util.DisplayMetrics;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ViewFlipper;
-
-import android.content.*;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.KeyEvent;
+import android.view.View;
+import game.ourmaze.Data;
+import game.ourmaze.Init;
+import game.ourmaze.R;
+import game.ourmaze.role.ManClass;
+import game.ourmaze.role.ManClass.Man;
+import game.ourmaze.views.BeginView;
 
 public class BeginActivity extends Activity implements View.OnClickListener {
 

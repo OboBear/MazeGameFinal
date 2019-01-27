@@ -22,13 +22,20 @@ public class ToolAdapter extends RecyclerView.Adapter<ToolAdapter.ToolIconViewHo
 
     List<ToolBean> toolBeans;
 
-    public ToolAdapter(List<ToolBean> toolBeans) {
+    public interface ToolClickCallBack {
+        void onClick(int position, ToolBean toolBean);
+    }
+
+    ToolClickCallBack toolClickCallBack;
+
+    public ToolAdapter(List<ToolBean> toolBeans, ToolClickCallBack toolClickCallBack) {
         this.toolBeans = toolBeans;
+        this.toolClickCallBack = toolClickCallBack;
     }
 
     @Override
     public ToolIconViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ToolIconViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tool_icon, parent, false));
+        return new ToolIconViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tool_icon, parent, false), toolClickCallBack);
     }
 
     @Override
@@ -44,11 +51,13 @@ public class ToolAdapter extends RecyclerView.Adapter<ToolAdapter.ToolIconViewHo
     static class ToolIconViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_tool_icon;
         TextView tv_tool_count;
+        ToolClickCallBack toolClickCallBack;
 
-        public ToolIconViewHolder(View itemView) {
+        public ToolIconViewHolder(View itemView, ToolClickCallBack toolClickCallBack) {
             super(itemView);
             iv_tool_icon = itemView.findViewById(R.id.iv_tool_icon);
             tv_tool_count = itemView.findViewById(R.id.tv_tool_count);
+            this.toolClickCallBack = toolClickCallBack;
         }
 
         public void bindData(ToolBean toolBean, int position) {
@@ -62,7 +71,10 @@ public class ToolAdapter extends RecyclerView.Adapter<ToolAdapter.ToolIconViewHo
             }
             itemView.setOnClickListener(v->{
                 if (toolBean.count > 0) {
-                    Tool.useTool(position, toolBean);
+//                    Tool.useTool(position, toolBean);
+                    if (toolClickCallBack != null) {
+                        toolClickCallBack.onClick(position, toolBean);
+                    }
                 }
             });
         }

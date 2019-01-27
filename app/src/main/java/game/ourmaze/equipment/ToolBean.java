@@ -9,4 +9,5 @@ public class ToolBean {
     public int iconResource;
     public int iconResourceEmp;
     public int count;
+
 }

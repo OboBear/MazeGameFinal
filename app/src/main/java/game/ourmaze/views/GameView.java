@@ -57,7 +57,7 @@ public class GameView extends View {
                 // 迷雾覆盖的格子
                 if (Data.fog[i][j] == 0) {
                     Data.paint.setColor(Color.WHITE);
-                    Init.bar(Data.unit_l * (i - 1) + Data.place_x, Data.unit_l * (j - 1) + Data.place_y, Data.unit_l * i + Data.place_x, Data.unit_l * j + Data.place_y);
+                    drawRect(canvas, Data.unit_l * (i - 1) + Data.place_x, Data.unit_l * (j - 1) + Data.place_y, Data.unit_l * i + Data.place_x, Data.unit_l * j + Data.place_y);
                 }
                 // 以下皆为未被迷雾覆盖的格子
                 // 墙
@@ -115,12 +115,9 @@ public class GameView extends View {
 
             }
             if (Data.y_man_move_time_state == 4 || Data.y_man_move_time_state == -4 || Data.x_man_move_time_state == 4 || Data.x_man_move_time_state == -4) {
-
-
                 switch (ManClass.man.direct) {
                     case 1:
                         canvas.drawBitmap(Data.forw[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
-
                         break;
                     case 3:
                         canvas.drawBitmap(Data.up[Math.abs(Data.x_man_move_time_state + Data.y_man_move_time_state)], Data.unit_l * (ManClass.man.x - 1) + Data.place_x, Data.place_y + Data.unit_l * (ManClass.man.y - 1) - (4 - Data.y_man_move_time_state) * Data.unit_l / 4, paint);
@@ -180,34 +177,29 @@ public class GameView extends View {
             canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.arrive), Data.unit_l * (ManClass.man.x - 1) + Data.place_x - Data.unit_l / 2, Data.unit_l * (ManClass.man.y - 2) + Data.place_y - Data.unit_l / 3, paint);
         }
 
-
         ////////////////////////
         //paint tool
-
         paint.setTextSize(Data.unit_l / 6);
-
         canvas.drawBitmap(Data.toolbox, 0, 0, paint);
         int h1 = Data.scr_height / 15, h2 = h1 + Data.scr_height / 19, h3 = h2 + Data.scr_height / 29, h4 = h3 + Data.scr_height / 29;
         int l1;
         l1 = Data.pro_l * ManClass.man.blood / Data.Blood;
 
         Data.paint.setColor(Color.BLACK);
-        //Init.bar(_left, _top, _right, _bottom, deep)
-        Init.bar(Data.bar_x - 10, h1 - 10, Data.bar_x + Data.pro_l + 10, h2 + 10, 50);
-        Init.bar(Data.bar_x - 10, h3 - 10, Data.bar_x + Data.pro_l + 10, h4 + 10, 50);
+        drawRect(canvas, Data.bar_x - 10, h1 - 10, Data.bar_x + Data.pro_l + 10, h2 + 10, 50);
+        drawRect(canvas, Data.bar_x - 10, h3 - 10, Data.bar_x + Data.pro_l + 10, h4 + 10, 50);
         Data.paint.setColor(Color.BLACK);
-        Init.bar(Data.bar_x, h1, Data.bar_x + Data.pro_l, h1 + Data.pro_h, 150);
+        drawRect(canvas, Data.bar_x, h1, Data.bar_x + Data.pro_l, h1 + Data.pro_h, 150);
         Data.paint.setColor(Color.RED);
-        Init.bar(Data.bar_x, h1, Data.bar_x + l1, h1 + Data.pro_h);
+        drawRect(canvas, Data.bar_x, h1, Data.bar_x + l1, h1 + Data.pro_h);
 
-        paint.setColor(Color.WHITE);
-        paint.setTextSize(Data.unit_l / 5);
-        canvas.drawText("HP：" + ManClass.man.blood, Data.bar_x, h2, paint);
-        canvas.drawText("攻击：" + ManClass.man.beat, Data.bar_x, h4, paint);
-        canvas.drawText("防御：" + ManClass.man.defence, (Data.bar_x + Data.bar_x + Data.pro_l) / 2, h4, paint);
-        //canvas.drawText("财富："+ManClass.man.wisedom,Data.bar_x,h5, paint);
-        paint.setColor(Color.RED);
-        canvas.drawText("当前等级：" + (ManClass.man.level + 1), Data.bar_x, Data.scr_height / 30, paint);
+//        paint.setColor(Color.WHITE);
+//        paint.setTextSize(Data.unit_l / 5);
+//        canvas.drawText("HP：" + ManClass.man.blood, Data.bar_x, h2, paint);
+//        canvas.drawText("攻击：" + ManClass.man.beat, Data.bar_x, h4, paint);
+//        canvas.drawText("防御：" + ManClass.man.defence, (Data.bar_x + Data.bar_x + Data.pro_l) / 2, h4, paint);
+//        paint.setColor(Color.RED);
+//        canvas.drawText("当前等级：" + (ManClass.man.level + 1), Data.bar_x, Data.scr_height / 30, paint);
 
         canvas.drawBitmap(Data.circle, Data.x_circlepoint - Data.scr_height / 4, Data.y_circlepoint - Data.scr_height / 4, paint);
         canvas.drawBitmap(Data.button, Data.x_button - Data.r_button / 2, Data.y_button - Data.r_button / 2, paint);
@@ -215,17 +207,17 @@ public class GameView extends View {
             Tool.paint_map();
         }
 
-        if (Data.pass) {
-            Data.paint.setColor(Color.GRAY);
-            Init.bar(Data.scr_width / 4, Data.scr_height / 4, Data.scr_width * 3 / 4, Data.scr_height * 3 / 4);
-            Data.paint.setColor(Color.YELLOW);
-            paint.setTextSize(Data.unit_l / 2);
-            canvas.drawText("恭喜你进入下一关!", Data.scr_width / 4 * 5 / 4, Data.scr_height / 2, paint);
-        }
+//        if (Data.pass) {
+//            Data.paint.setColor(Color.GRAY);
+//            drawRect(canvas, Data.scr_width / 4, Data.scr_height / 4, Data.scr_width * 3 / 4, Data.scr_height * 3 / 4);
+//            Data.paint.setColor(Color.YELLOW);
+//            paint.setTextSize(Data.unit_l / 2);
+//            canvas.drawText("恭喜你进入下一关!", Data.scr_width / 4 * 5 / 4, Data.scr_height / 2, paint);
+//        }
 
         if (Data.death_flag) {
             Data.paint.setColor(Color.GRAY);
-            Init.bar(0, 0, Data.scr_width, Data.scr_height);
+            drawRect(canvas, 0, 0, Data.scr_width, Data.scr_height);
 
             Matrix matrix = new Matrix();
             int width = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.death)).getWidth();
@@ -249,7 +241,7 @@ public class GameView extends View {
         }
         if (Data.AK) {
             Data.paint.setColor(Color.GRAY);
-            Init.bar(0, 0, Data.scr_width, Data.scr_height);
+            drawRect(canvas, 0, 0, Data.scr_width, Data.scr_height);
             Matrix matrix = new Matrix();
             int width = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.man)).getWidth();
             int height = BitmapFactory.decodeStream(getResources().openRawResource(R.drawable.man)).getHeight();
@@ -267,6 +259,16 @@ public class GameView extends View {
             Data.stop_event = false;
         }
     }
+
+    private void drawRect(Canvas drawcanvas, int _left, int _top, int _right, int _bottom) {
+        drawRect(drawcanvas, _left, _top, _right, _bottom, 150);
+    }
+
+    private void drawRect(Canvas drawcanvas, int _left, int _top, int _right, int _bottom, int alpha) {
+        Data.paint.setAlpha(alpha);
+        drawcanvas.drawRect(_left, _top, _right, _bottom, Data.paint);
+    }
+
 
 
     ////////
@@ -330,7 +332,6 @@ public class GameView extends View {
                         else {
                             if (Data.button_man_move) {
                                 if (Data.y_button - Data.y_circlepoint > 0) {
-
                                     if (Function.distance(Data.x_button, Data.y_button, Data.x_circlepoint, Data.y_circlepoint) > Data.scr_height / 12) {
                                         Data.direct = 1;
                                         ManClass.man.direct = Data.direct = 1;
